@@ -1,0 +1,17 @@
+# Universal Rules for Text-Based Files (Important for Collaboration)
+* text=auto   # Automatic text file detection and line-ending normalization
+
+# Python-Specific Optimizations 
+*.py diff=python  # Use a Python-aware diff driver (if you have one)
+__pycache__/ -diff  # Don't bother diffing the bytecode cache
+*.pyc -diff   
+
+# Common IDEs (Adjust as needed for your team)
+.idea/ -diff 
+**/.vscode/ -diff  # Assuming some collaborators use VS Code
+
+# Other Potential Additions (Consider if relevant to your project)
+*.json diff=json  # Diff driver for JSON files (if you have a compatible one)
+data/* -diff  # Ignore diffs on a whole 'data' directory if non-textual
+*.png -diff  # Treat image files as binary, not text
+*.exe -diff
