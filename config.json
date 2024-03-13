@@ -1,0 +1,15 @@
+[
+    { 
+      "name": "Hack and Slash",
+      "description": "A powerful double attack that has a chance of causing bleeding.",
+      "type": "ActiveSkill",
+      "affects": "target",
+      "damage": 8,
+      "damage-type": ["melee", "physical"],
+      "cooldown": 1,
+      "mp_cost": 3,
+      "effects": [
+          { "type": "bleed", "chance": 30, "duration": 2 }
+      ]
+    }
+]
