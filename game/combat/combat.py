@@ -99,8 +99,9 @@ def combat():
             if len(enemy_combat) == 0:
                 floor+=1
                 break
-    return(floor)
     rarity_chance = floor+.25*len(enemy_combat)+10*len(boss_enemy_combat)
+    return(floor)
+
 
     #generate rewards based on defeated enemies and floor
 

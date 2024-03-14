@@ -1,4 +1,7 @@
+import os
+json_file_path = os.path.join(os.path.dirname(__file__), '..', 'assets', 'data', 'config.json')
 import json
+
 import random
 from enum import Enum
 class rarity(Enum): 
@@ -7,7 +10,7 @@ class rarity(Enum):
     rare = 1.45
     epic = 1.65
     legendary = 2.0
-    
+
 class ItemType(Enum):
     WEAPON = "weapon"
     ARMOR = "armor"
@@ -46,8 +49,64 @@ class item_framework:
             return self.name == other.name and self.item_type == other.item_type and self.rarity == other.rarity
         return False
 
+def rarity_odds(level):
+    if level <= 5:
+        return {
+            'common': 1 - 0.1,
+            'uncommon': 0.09,
+            'rare': 0.01,
+            'epic': 0
+        }
+    elif level <=10:
+        return {
+            'common': 1 - 0.01 ,
+            'uncommon': 0.09  ,
+            'rare': 0.009 ,
+            'epic': 0.001, 
+            'legendary': 0
+        }
+    elif level <=15:
+        return {
+            'common': 1 - 0.0175 ,
+            'uncommon': 0.01 ,
+            'rare': 0.005 ,
+            'epic': 0.00245,
+            'legendary': 0.0005
+        }
+    elif level <=20:
+        return {
+            'common': 1 - 0.01,
+            'uncommon': 0.01 ,
+            'rare': 0.005 ,
+            'epic': 0.0024,
+            'legendary': 0.001
+        }
+    else:
+        return {
+            'common': 1 - 0.5,
+            'uncommon': 0.39 ,
+            'rare': 0.1 ,
+            'epic': 0.099, 
+            'legendary': 0.001
+        }
 
-def weapon_generation(item_name):
+def rarity_determination(level):
+    odds = rarity_odds(level)
+    rarity_chance = random.uniform(0,1)
+    if rarity_chance < odds['common']:
+        chosen_rarity = rarity.common
+    elif rarity_chance < odds['common'] + odds['uncommon']:
+        chosen_rarity = rarity.uncommon
+    elif rarity_chance < odds['common'] + odds['uncommon'] + odds['rare']:
+        chosen_rarity = rarity.rare
+    elif rarity_chance < odds['common'] + odds['uncommon'] + odds['rare'] + odds['epic']:
+        chosen_rarity = rarity.epic
+    elif rarity_chance < odds['common'] + odds['uncommon'] + odds['rare'] + odds['epic'] + odds['legendary']: 
+        chosen_rarity = rarity.legendary
+    return chosen_rarity
+
+
+def weapon_generation(item_name,level):
     # Load the config file
     with open('config.json') as f:
         config = json.load(f)
@@ -59,18 +118,7 @@ def weapon_generation(item_name):
     
     # Create the item    
     item_type = 'weapon'
-    rarity_chance = random.randint(0,100)
-    if rarity_chance < 45:
-        chosen_rarity = rarity.common
-    elif rarity_chance < 60:
-        rarity.uncommon
-    elif rarity_chance <80:
-        rarity.rare
-    elif rarity_chance < 95:
-        rarity.epic
-    else:
-        rarity.legendary
-                        
+    chosen_rarity = rarity_determination(level)
     health = 0
     damage = random.randint(0, 10)*chosen_rarity.value* item_config["physical_damage_modifier"]
     elemental_damage = random.randint(0,10)*chosen_rarity.value* item_config["elemental_damage_modifier"]
@@ -78,18 +126,18 @@ def weapon_generation(item_name):
     resist = 0
     elemental_resists = 0
     bleed_threshold = 0
-    critical_chance = random.uniform(0,.02)*item_config["crit_chance_modifier"]
-    critical_damage = random.uniform(0,.02)*item_config["crit_damage_modifier"]
+    critical_chance = random.uniform(0,.02)*item_config["crit_chance_modifier"]*chosen_rarity.value
+    critical_damage = random.uniform(0,.02)*item_config["crit_damage_modifier"]*chosen_rarity.value
     self_healing = 0
     healing = 0
-    autoattack_speed = random.random()*item_config["autoattack_speed_modifier"]
-    ability_speed = random.randint(0,10)*item_config["ability_speed_modifier"]
+    autoattack_speed = random.random()*item_config["autoattack_speed_modifier"]*chosen_rarity.value
+    ability_speed = random.randint(0,10)*item_config["ability_speed_modifier"]*chosen_rarity.value
     weapon = item_framework(item_name, chosen_rarity, health, damage, elemental_damage,
                             bleed_threshold_damage, resist, elemental_resists,
                             bleed_threshold, critical_chance, critical_damage,
                             self_healing, healing, autoattack_speed, ability_speed, item_type)
     return weapon
-def armor_generation(item_name):
+def armor_generation(item_name, level):
     # Load the config file
     with open('config.json') as f:
         config = json.load(f)
@@ -101,7 +149,7 @@ def armor_generation(item_name):
     
     # Create the item    
     item_type = 'armor'
-    chosen_rarity = random.choice(list(rarity))
+    chosen_rarity = rarity_determination(level)
     health = random.randint(0, 10)*chosen_rarity.value* item_config["hp_modifier"]
     damage = 0
     elemental_damage = 0
@@ -120,7 +168,7 @@ def armor_generation(item_name):
                             bleed_threshold, critical_chance, critical_damage,
                             self_healing, healing, autoattack_speed, ability_speed, item_type)
     return armor
-def accessory_generation(item_name):
+def accessory_generation(item_name, level):
     # Load the config file
     with open('config.json') as f:
         config = json.load(f)
@@ -132,7 +180,7 @@ def accessory_generation(item_name):
     
     # Create the item    
     item_type = 'accessory'
-    chosen_rarity = random.choice(list(rarity))
+    chosen_rarity = rarity_determination(level)
     health = random.randint(0, 10)*chosen_rarity.value* item_config["hp_modifier"]
     damage = random.randint(0, 10)*chosen_rarity.value* item_config["physical_damage_modifier"]
     elemental_damage = random.randint(0,10)*chosen_rarity.value* item_config["elemental_damage_modifier"]
@@ -152,4 +200,4 @@ def accessory_generation(item_name):
                             self_healing, healing, autoattack_speed, ability_speed, item_type)
     return accessory
 
-print(weapon_generation("Axe"))
+print(weapon_generation("Axe",8))
