@@ -1,7 +1,6 @@
 import json
 import random
 from enum import Enum
-
 class rarity(Enum): 
     common = 1
     uncommon = 1.25
