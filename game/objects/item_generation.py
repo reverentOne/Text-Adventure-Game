@@ -105,7 +105,7 @@ def rarity_determination(level):
     return chosen_rarity
 
 
-def weapon_generation(item_name,level):
+def weapon_generation(item_name, level, specified_rarity=None):
     # Load the config file
     with open(config_path) as f:
         config = json.load(f)
@@ -117,7 +117,10 @@ def weapon_generation(item_name,level):
     
     # Create the item    
     item_type = 'weapon'
-    chosen_rarity = rarity_determination(level)
+    if specified_rarity is not None:
+        chosen_rarity = specified_rarity
+    else:
+        chosen_rarity = rarity_determination(level)
     health = 0
     damage = random.randint(0, 10)*chosen_rarity.value* item_config["physical_damage_modifier"]
     elemental_damage = random.randint(0,10)*chosen_rarity.value* item_config["elemental_damage_modifier"]
@@ -200,3 +203,4 @@ def accessory_generation(item_name, level):
     return accessory
 
 print(weapon_generation("Axe",25))
+print(weapon_generation("Axe",25, rarity.rare))
