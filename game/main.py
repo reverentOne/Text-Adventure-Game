@@ -1,62 +1,40 @@
-import adventurer_generation
-#import enemy_generation
-import random
+import pathlib, sys, os
+from game_files.functions import save_load  # Adapt 'game_files' to your organization
+from game_files.output import show_title, show_help, show_version  # Customize these
+from game_files.player import Player  # Assuming you have a Player class
 
+# Metadata
+__version__ = "0.1.0"  # Start with an early version
+__date__ = '2023-08-17'  # Today's date
+__author__ = "Your Name"
+__email__ = "your_email@example.com"  # Replace with your information
 
-def generator(odds):
+# --- Main Execution ---
+if __name__ == '__main__':
+    if '--help' in sys.argv:
+        show_help()
+    if '--version' in sys.argv:
+        show_version(__version__, __date__)
 
-    if odds < 45:
-        return adventurer_generation.common_adventurer()
-    elif odds < 60:
-        return adventurer_generation.uncommon_adventurer()
-    elif odds <80:
-        return adventurer_generation.rare_adventurer()
-    elif odds < 95:
-        return adventurer_generation.epic_adventurer()
-    else:
-        return adventurer_generation.legendary_adventurer()
+    # Save File Logic 
+    save_directory = os.path.join(os.path.expanduser('~'), 'your_game_saves')  # User's home directory
+    os.makedirs(save_directory, exist_ok=True)  # Create the save directory if needed
+    save_path = os.path.join(save_directory, 'adventure_save.txt')  # Or your preferred format
 
-def draft_party():
-    adventurers_list = []
-    print("Welcome to your Adventurer Draft! Draft a party of 4 adventurers. You will get a choice from 3 random adventurers in each of 4 rounds. Choose wisely and good luck!\n")
-    for _ in range(4):  
-        print("Round " + str(_+1), "\n")
-        adventurers_draft_list = []
-        for _ in range(3):  
-            print("Adventurer " + str(_+1), "\n")
-            new_adventurer = generator(random.randint(0,100))
-            print(new_adventurer, "\n")
-            adventurers_draft_list.append(new_adventurer)
-        while True:
-            choice = input("Choose Your Adventurer [type 1, 2 or 3] ")
-            if choice in ['1', '2', '3']:
-                choice = int(choice)
-                break
-            else:
-                print("That is not an option.\n")
+    # Load or Create Player 
+    try:
+        player = save_load(save_path, mode='load')
+    except FileNotFoundError:
+        print("No save found. Starting a new adventure!")
+        player = Player(input("Enter your adventurer's name: "))
 
+    # Display Title
+    show_title()
 
-        if choice == 1:
-            your_first_adventurer = adventurers_draft_list[0]
-            adventurers_list.append(your_first_adventurer)
-
-        elif choice == 2:
-            your_first_adventurer = adventurers_draft_list[1]
-            adventurers_list.append(your_first_adventurer)
-        elif choice == 3:
-            your_first_adventurer = adventurers_draft_list[2]
-            adventurers_list.append(your_first_adventurer)
-
-        print(your_first_adventurer)
-        print("You have chosen your adventurer.", "\n\n")
-
-    print("\nYour party is complete! Here are your adventurers:")
-    for adventurer in adventurers_list:
-        print("")
-        print(adventurer)
-    return adventurers_list
-
-def main():
-    party = draft_party()
-
-main()
+    # --- Start Your Game Loop Here! ---
+    # Example:
+    while True:
+        # Display location description, get player input, etc.
+        # ... Your game logic will go here ...
+        if player.game_over:
+            break  # Example exit condition
