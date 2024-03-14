@@ -10,5 +10,16 @@ def load_game():
         with open('../assets/data/game_state.json', 'r') as f:
             game_state = json.load(f)
     else:
-        game_state = create_initial_game_state()  # You would need to define this function
+        game_state = create_initial_game_state()
     return game_state
+
+def create_initial_game_state():
+    # Define the initial game state here
+    return {
+        'player': {
+            'name': 'Player 1',
+            'health': 100,
+            'inventory': []
+        },
+        'location': 'home'
+    }
