@@ -2,9 +2,28 @@ import random
 import array
 import numpy
 floor = 0
+boss_first_name = """ "Thuzuxeith", "Peercanam", "Lisantam","Dorlgughix",
+"Sezelcolchung", "Sustuthoseb", "Cablithrum",
+"Dwepazam", "Abrex", "Boblirchu","Sustuthoseb", 
+"Cablithrum", "Dwepazam", "Abrex", "Boblirchu", "Corgam", "Felgun", "Daenalgras", 
+"Bakaeel", "Kabammam", "Muslaam al-Naasooq", "Hudhaas" """
+boss_title = """ the Unyielding", "the Unbreakable", "the Unstoppable", "the Unbeatable",
+ "the Unconquerable", "the Unassailable", "the Unshakeable", "the Unassailable", 
+"the Unshakable", "the Unfathomable", "the Unfailing", 
+"the Unfaltering", "the Unflinching", "the Unforgiving",
+ "the world eater", "the destroyer", "the conqueror",
+"the invincible", "the indomitable", "the insurmountable", "the first flame", 
+"first among eqauls", "the last hope", "the last stand", "the last bastion" """
+
+enemy_first_name = """ "grog", "thug", "mug", "bug", "lug", "dug", "rug", "tug", "pug", 
+"jug", "fug", "zug", "vug", "cug", "xug", "yug", 
+"nug", "wug", "qug, "drazkir","turt", "brodd","dart" """
+
+
 class character_framework:
-    def __init__(self, health, damage,elemental_damage,bleed_threshold_damage, resist, elemental_resists,bleed_threshold,
+    def __init__(self,name, health, damage,elemental_damage,bleed_threshold_damage, resist, elemental_resists,bleed_threshold,
                  critical_chance, critical_damage, self_healing, healing,autoattack_speed,ability_speed):
+        self.name = name
         self.health = health
         self.damage = damage  # Array for slashing, piercing, bludgeoning damage
         self.elemental_damage = elemental_damage # Array for fire, radiant, and necrotic damage
@@ -20,7 +39,7 @@ class character_framework:
         self.ability_speed = ability_speed
 
 def boss_enemy_generation():
-    boss_enemy = character_framework
+    name = random.choice(boss_first_name) + random.choice(boss_title)
     health = random.randint(10, floor * 100 + 10)
     damage = random.randint(0, 3 * floor + 10)
     elemental_damage = random.randint(0,2*floor+8)
@@ -34,12 +53,13 @@ def boss_enemy_generation():
     healing = random.randint(0,5)
     autoattack_speed = random.random()
     ability_speed = random.randint(0,300) 
-    boss_enemy = character_framework(health, damage,elemental_damage,
+    boss_enemy = character_framework(name,health, damage,elemental_damage,
                                      bleed_threshold_damage, resist, elemental_resists,
                                      bleed_threshold,critical_chance, critical_damage,
                                        self_healing, healing, autoattack_speed, ability_speed)
-def enemy_generation():
-    enemy = character_framework
+    return boss_enemy
+def enemy_generator():
+    name = random.choice(enemy_first_name)
     health = random.randint(10, floor * 10 + 10)
     damage = random.randint(0, 3 * floor)
     elemental_damage = random.randint(0,floor+1)
@@ -53,8 +73,9 @@ def enemy_generation():
     healing = random.randint(0,1)
     autoattack_speed = random.random()
     ability_speed = random.randint(0,150)
-    enemy = character_framework(health, damage,elemental_damage,
+    enemy = character_framework(name,health, damage,elemental_damage,
                                      bleed_threshold_damage, resist, elemental_resists,
                                      bleed_threshold,critical_chance, critical_damage,
                                        self_healing, healing, autoattack_speed, ability_speed)
+    return enemy
 

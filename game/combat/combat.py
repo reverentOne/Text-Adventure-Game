@@ -1,12 +1,13 @@
-import party_draft
+from party_draft import draft_party
+import sys
+sys.path.append('/path/to/party_draft.py')
 from enemy_generation import boss_enemy_generation, enemy_generator
-import enemy_generation
+
 import time
-import item_generation
-import adventurer_generation
+
 defeated_enemies = []
 defeated_bosses = []
-party = party_draft()
+party = draft_party()
 def combat():
     floor = 0
     active_party = []
@@ -101,6 +102,7 @@ def combat():
                 break
     return(floor)
     #generate rewards based on defeated enemies and floor
-                
 
+draft_party()
+combat()
 
