@@ -1,5 +1,5 @@
 import sys, os
-from game.utils.save_load import save_game, create_initial_game_state, exit_game, restart_game
+from game.utils import save_load
 
 def show_title():
     """Show game title, tips, and player stats."""
@@ -24,8 +24,8 @@ def show_game_over():
     {game_art2}
     \nThank you for playing!\n\nPlay again?
     """)
-    if str(input('No / Yes or Enter > ')).lower() in ['n', 'no']: exit_game(create_initial_game_state())
-    else: restart_game()
+    if str(input('No / Yes or Enter > ')).lower() in ['n', 'no']: save_load.exit_game(create_initial_game_state())
+    else: save_load.restart_game()
     sys.exit()
 
 

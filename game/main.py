@@ -1,5 +1,5 @@
 import pathlib, sys, os
-from game_files.functions import save_load  # Adapt 'game_files' to your organization
+from game.ui import display
 from game_files.output import show_title, show_help, show_version  # Customize these
 from game_files.player import Player  # Assuming you have a Player class
 
@@ -16,10 +16,7 @@ if __name__ == '__main__':
     if '--version' in sys.argv:
         show_version(__version__, __date__)
 
-    # Display Title
+    # Start the game
     show_title()
-
     while True:
         # ... game logic will go here ...
-        if game_over:
-            break
