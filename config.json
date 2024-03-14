@@ -12,7 +12,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     { 
       "name": "Long Sword",
@@ -27,7 +29,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     { 
       "name": "Axe",
@@ -42,7 +46,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     { 
       "name": "Bow",
@@ -57,7 +63,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     { 
       "name": "Staff",
@@ -72,7 +80,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     { 
       "name": "Dagger",
@@ -87,7 +97,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     { 
       "name": "Hammer",
@@ -102,7 +114,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     { 
       "name": "Crossbow",
@@ -117,7 +131,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     { 
       "name": "Greatsword",
@@ -132,7 +148,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     { 
       "name": "Wand",
@@ -147,7 +165,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     
     {
@@ -163,7 +183,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 5
+      "hp_modifier": 5,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Plate Armor",
@@ -178,7 +200,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 10
+      "hp_modifier": 10,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Chainmail Armor",
@@ -193,7 +217,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 7
+      "hp_modifier": 7,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Robe",
@@ -208,7 +234,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 3
+      "hp_modifier": 3,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Knight's Armor",
@@ -223,7 +251,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 2
+      "hp_modifier": 2,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Dragon Scale Armor",
@@ -238,7 +268,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 10,
-      "hp_modifier": 30
+      "hp_modifier": 30,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Diamond Armor",
@@ -253,7 +285,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 20
+      "hp_modifier": 20,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Invictus Aegis Armor",
@@ -268,7 +302,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 100
+      "hp_modifier": 100,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Shield",
@@ -283,7 +319,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 5
+      "hp_modifier": 5,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     
     {
@@ -299,7 +337,9 @@
       "crit_damage_modifier": 0.1,
       "ally_healing_modifier": 1,
       "self_healing_modifier": 1,
-      "hp_modifier": 10
+      "hp_modifier": 10,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Amulet of Wisdom",
@@ -314,7 +354,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Necklace of Vitality",
@@ -329,7 +371,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Bracelet of Agility",
@@ -344,7 +388,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Earring of Endurance",
@@ -359,7 +405,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 200
+      "hp_modifier": 200,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Gloves of Precision",
@@ -374,7 +422,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     },
     {
       "name": "Ring of Regeneration",
@@ -389,7 +439,9 @@
       "crit_damage_modifier": 0,
       "ally_healing_modifier": 0,
       "self_healing_modifier": 100,
-      "hp_modifier": 0
+      "hp_modifier": 0,
+      "autoattack_speed_modifier": 0,
+      "ability_speed_modifier": 0
     }
     
 ]
