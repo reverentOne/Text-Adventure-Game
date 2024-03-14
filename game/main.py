@@ -16,25 +16,10 @@ if __name__ == '__main__':
     if '--version' in sys.argv:
         show_version(__version__, __date__)
 
-    # Save File Logic 
-    save_directory = os.path.join(os.path.expanduser('~'), 'your_game_saves')  # User's home directory
-    os.makedirs(save_directory, exist_ok=True)  # Create the save directory if needed
-    save_path = os.path.join(save_directory, 'adventure_save.txt')  # Or your preferred format
-
-    # Load or Create Player 
-    try:
-        player = save_load(save_path, mode='load')
-    except FileNotFoundError:
-        print("No save found. Starting a new adventure!")
-        player = Player(input("Enter your adventurer's name: "))
-
     # Display Title
     show_title()
 
-    # --- Start Your Game Loop Here! ---
-    # Example:
     while True:
-        # Display location description, get player input, etc.
-        # ... Your game logic will go here ...
-        if player.game_over:
-            break  # Example exit condition
+        # ... game logic will go here ...
+        if game_over:
+            break

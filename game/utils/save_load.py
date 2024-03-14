@@ -1,5 +1,5 @@
 import json
-import os
+import os, sys
 
 def save_game(game_state):
     with open('../assets/data/game_state.json', 'w') as f:
@@ -23,3 +23,15 @@ def create_initial_game_state():
         },
         'location': 'home'
     }
+
+def exit_game(save_state):
+    """Saves game using pickle, then exits."""
+
+    save_game(save_state)
+    sys.exit()
+
+def restart_game(*args):
+    """Restart game."""
+
+    print("< Restarting Game... >")
+    os.execl(sys.executable, sys.executable, *sys.argv)
