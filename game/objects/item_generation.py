@@ -7,7 +7,7 @@ class rarity(Enum):
     rare = 1.45
     epic = 1.65
     legendary = 2.0
-
+    
 class ItemType(Enum):
     WEAPON = "weapon"
     ARMOR = "armor"
@@ -59,7 +59,18 @@ def weapon_generation(item_name):
     
     # Create the item    
     item_type = 'weapon'
-    chosen_rarity = random.choice(list(rarity))
+    rarity_chance = random.randint(0,100)
+    if rarity_chance < 45:
+        chosen_rarity = rarity.common
+    elif rarity_chance < 60:
+        rarity.uncommon
+    elif rarity_chance <80:
+        rarity.rare
+    elif rarity_chance < 95:
+        rarity.epic
+    else:
+        rarity.legendary
+                        
     health = 0
     damage = random.randint(0, 10)*chosen_rarity.value* item_config["physical_damage_modifier"]
     elemental_damage = random.randint(0,10)*chosen_rarity.value* item_config["elemental_damage_modifier"]

@@ -1,6 +1,5 @@
 from party_draft import draft_party
-import sys
-sys.path.append('/path/to/party_draft.py')
+from item_generation import armor_generation, accessory_generation, weapon_generation, rarity, item_framework
 from enemy_generation import boss_enemy_generation, enemy_generator
 
 import time
@@ -101,6 +100,8 @@ def combat():
                 floor+=1
                 break
     return(floor)
+    rarity_chance = floor*len(enemy_combat)*10*len(boss_enemy_combat)
+
     #generate rewards based on defeated enemies and floor
 
 draft_party()
