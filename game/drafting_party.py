@@ -1,4 +1,4 @@
-import adventurer_generation
+from objects import adventurer_generation
 #import enemy_generation
 import random
 

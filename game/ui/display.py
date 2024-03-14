@@ -1,13 +1,13 @@
 import sys, os
-from game.utils import save_load
+from utils import save_load
 
 def show_title():
     """Show game title, tips, and player stats."""
 
-    show_art('start banner')
+#    show_art('start banner')
     print(f"""
     ---------- Text Adventure Game ----------
-    {game_art1}
+
     \nHere are some basic commands to get you started: 
         /help: Opens the help menu
         /settings: Opens the game settings menu
@@ -18,22 +18,22 @@ def show_title():
 def show_game_over():
     """Show game over message and stats."""
 
-    show_art('game over')
+#    show_art('game over')
     print(f"""
     ---------- Game Over ----------
-    {game_art2}
+
     \nThank you for playing!\n\nPlay again?
     """)
-    if str(input('No / Yes or Enter > ')).lower() in ['n', 'no']: save_load.exit_game(create_initial_game_state())
+    if str(input('No / Yes or Enter > ')).lower() in ['n', 'no']: save_load.exit_game(save_load.create_initial_game_state())
     else: save_load.restart_game()
     sys.exit()
 
 
 def show_hud():
-    # Code to display the HUD (Heads-Up Display)
+    pass
 
 def show_settings():
-    # Code to display the game settings
+    pass
 
 def show_version(game_version, version_date):
     """Shows game version."""

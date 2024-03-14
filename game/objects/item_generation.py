@@ -1,6 +1,4 @@
 import json
-import os
-config_path = os.path.join('assets', 'data', 'config.json')
 import random
 from enum import Enum
 class rarity(Enum): 
@@ -107,7 +105,7 @@ def rarity_determination(level):
 
 def weapon_generation(item_name, level, specified_rarity=None):
     # Load the config file
-    with open(config_path) as f:
+    with open('..\\assets\\data\\config.json') as f:
         config = json.load(f)
 
     # Find the item in the config file
@@ -141,7 +139,7 @@ def weapon_generation(item_name, level, specified_rarity=None):
     return weapon
 def armor_generation(item_name, level):
     # Load the config file
-    with open(config_path) as f:
+    with open('..\\assets\\data\\config.json') as f:
         config = json.load(f)
 
     # Find the item in the config file
@@ -172,7 +170,7 @@ def armor_generation(item_name, level):
     return armor
 def accessory_generation(item_name, level):
     # Load the config file
-    with open(config_path) as f:
+    with open('..\\assets\\data\\config.json') as f:
         config = json.load(f)
 
     # Find the item in the config file
