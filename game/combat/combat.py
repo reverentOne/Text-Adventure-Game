@@ -26,7 +26,7 @@ def combat():
                 ability_speed_combat = party_member.ability_speed
                 ability_speed_combat -= 1
                 if party_member.base_physical_damage>0:
-                    enemy_combat[0].health -= party_member.base_physical_damage/enemy[0].physical_resistance
+                    enemy_combat[0].health -= party_member.base_physical_damage/enemy_combat[0].physical_resistance
                 if boss_enemy_combat[0].health <= 0:
                     defeated_bosses.append(boss[0])
                     for boss in boss_enemy_combat:
@@ -43,7 +43,7 @@ def combat():
                             break
                 if ability_speed_combat == 0:
                     if party_member.elemental_base_physical_damage>0:
-                        enemy_combat[0].health -= party_member.elemental_base_physical_damage/enemy[0].elemental_resists
+                        enemy_combat[0].health -= party_member.elemental_base_physical_damage/enemy_combat[0].elemental_resists
                         ability_speed_combat = party_member.ability_speed
                     weakest_member = min(active_party, key=lambda x: x.health)
                     weakest_member.health += weakest_member.healing

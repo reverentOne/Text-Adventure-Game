@@ -1,6 +1,5 @@
 import random
-import array
-import numpy
+
 floor = 0
 boss_first_name = """ "Thuzuxeith", "Peercanam", "Lisantam","Dorlgughix",
 "Sezelcolchung", "Sustuthoseb", "Cablithrum",
