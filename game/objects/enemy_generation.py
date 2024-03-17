@@ -24,17 +24,17 @@ class character_framework:
                  critical_chance, critical_damage, self_healing, healing,autoattack_speed,ability_speed):
         self.name = name
         self.health = health
-        self.damage = damage  # Array for slashing, piercing, bludgeoning damage
-        self.elemental_damage = elemental_damage # Array for fire, radiant, and necrotic damage
+        self.base_physical_damage = damage  # Array for slashing, piercing, bludgeoning damage
+        self.base_elemental_damage = elemental_damage # Array for fire, radiant, and necrotic damage
         self.bleed_threshold_damage = bleed_threshold_damage # Array for poison and bleed_threshold damage
-        self.resist = resist  # Array for slashing, piercing, bludgeoning resist
+        self.physical_resistance = resist  # Array for slashing, piercing, bludgeoning resist
         self.elemental_resists = elemental_resists  # Array for fire, radiant, necrotic resists
         self.bleed_threshold = bleed_threshold  #Array for thresholds for poison and bleed_threshold
         self.critical_chance = critical_chance
         self.critical_damage = critical_damage
         self.self_healing = self_healing
-        self.healing = healing
-        self.autoattack_speed = autoattack_speed
+        self.ally_healing = healing
+        self.attack_speed = autoattack_speed
         self.ability_speed = ability_speed
 
 def boss_enemy_generation():

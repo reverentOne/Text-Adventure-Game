@@ -1,7 +1,7 @@
 import drafting_party
 from objects.item_generation import armor_generation, accessory_generation, weapon_generation, rarity, item_framework
 from objects.enemy_generation import boss_enemy_generation, enemy_generator
-
+import random
 import time
 
 defeated_enemies = []
@@ -62,6 +62,18 @@ def combat():
                                 enemy_combat.remove(enemy)
                             if enemy == None:
                                 break
+                    if party_member.bleed_threshold_damage>0:
+                        enemy_combat[0].bleed_threshold -= party_member.bleed_threshold_damage
+                        if enemy_combat[0].bleed_threshold <= 0:
+                            enemy_combat[0].health -= enemy_combat[0].health/10
+                            enemy_combat[0].bleed_threshold = random.randint(200,1000)
+                            if enemy_combat[0].health <= 0:
+                                defeated_enemies.append(enemy[0])
+                                for enemy in enemy_combat:
+                                    if enemy in defeated_enemies:
+                                        enemy_combat.remove(enemy)
+                                    if enemy == None:
+                                        break
 
             for enemy in enemy_combat:
                 time.sleep(enemy.autoattack_speed)
@@ -79,6 +91,13 @@ def combat():
                         enemy.health += enemy.self_healing
                     if active_party[weakest_member].health <= 0:
                         active_party.remove(weakest_member)
+                    if enemy.bleed_threshold_damage>0:
+                        weakest_member.bleed_threshold -= enemy.bleed_threshold_damage
+                        if weakest_member.bleed_threshold <= 0:
+                            weakest_member.health -= weakest_member.health/10
+                            weakest_member.bleed_threshold = random.randint(100,400)
+                            if active_party[weakest_member].health <= 0:
+                                active_party.remove(weakest_member)
 
             for boss in boss_enemy_combat:
                 time.sleep(boss.autoattack_speed)
@@ -96,10 +115,16 @@ def combat():
                         boss.health += boss.self_healing
                     if active_party[weakest_member].health <= 0:
                         active_party.remove(weakest_member)
+                    if boss.bleed_threshold_damage>0:
+                        weakest_member.bleed_threshold -= boss.bleed_threshold_damage
+                        if weakest_member.bleed_threshold <= 0:
+                            weakest_member.health -= weakest_member.health/10
+                            weakest_member.bleed_threshold = random.randint(100,400)
+                            if active_party[weakest_member].health <= 0:
+                                active_party.remove(weakest_member)
             if len(enemy_combat) == 0:
                 floor+=1
                 break
-    rarity_chance = floor+.25*len(enemy_combat)+10*len(boss_enemy_combat)
     return(floor)
 
 
