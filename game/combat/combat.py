@@ -1,12 +1,12 @@
 import queue
-import adventurer_generation
-import enemy_generation
+from game.objects import adventurer_generation
+from game.objects import enemy_generation
 import random
 import time
 from drafting_party import draft_party
-def combat():
-    enemy_party = []
-    party = draft_party()
+def combat(): #make party_list and enemy_list parameters
+    enemy_party = [] # enemy_pary should be parameter, the creation of this party should be done elsewhere (posibly enemy_generation.py or in the chapters)
+    party = draft_party() #this is unnecessary. Just call party_list instead of party
     combat_queue = queue.PriorityQueue()
     floor = 0
     weakest_adventurer = min(party, key=lambda x: x.health)
