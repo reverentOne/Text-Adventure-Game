@@ -1,10 +1,9 @@
 import queue
-import adventurer_generation
 import enemy_generation
 import random
 import time
 from drafting_party import draft_party
-def combat(adventurers_list):
+def combat_loop(adventurers_list):
     party = []
     party = adventurers_list
     enemy_party = []
