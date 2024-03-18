@@ -10,7 +10,7 @@ from drafting_party import draft_party
 from chapters import chapter1, chapter2
 
 # Metadata
-__version__ = "0.1.0"  # Start with an early version
+__version__ = "0.1.0"
 __date__ = '2023-08-17'  # Today's date
 __author__ = "Your Name"
 __email__ = "your_email@example.com"  # Replace with your information
