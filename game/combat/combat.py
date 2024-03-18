@@ -4,9 +4,12 @@ import enemy_generation
 import random
 import time
 from drafting_party import draft_party
-def combat():
+def combat(adventurers_list):
+    party = []
+    party = adventurers_list
     enemy_party = []
-    party = draft_party()
+    if party == None:
+        party = draft_party()
     combat_queue = queue.PriorityQueue()
     floor = 0
     weakest_adventurer = min(party, key=lambda x: x.health)
@@ -43,6 +46,7 @@ def combat():
                     enemy_party.pop(0)
                     if len(enemy_party) == 0:
                         floor += 1
+                        print("You have cleared the floor!")
                         break
 
             elif isinstance(character, enemy_generation.character_framework):
@@ -60,6 +64,7 @@ def combat():
                 if weakest_adventurer.health <= 0:
                     party.remove(weakest_adventurer)
                     if len(party) == 0:
+                        print("You have been defeated.")
                         break
     if len(party) == 0:
         return floor
