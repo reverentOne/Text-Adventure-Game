@@ -105,7 +105,7 @@ def rarity_determination(level):
 
 def weapon_generation(item_name, level, specified_rarity=None):
     # Load the config file
-    with open('..\\assets\\data\\config.json') as f:
+    with open('assets\\data\\config.json') as f:
         config = json.load(f)
 
     # Find the item in the config file
