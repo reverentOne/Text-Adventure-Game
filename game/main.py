@@ -1,12 +1,16 @@
 import pathlib, sys, os
+#Get root directory of the project
+root_dir = pathlib.Path(__file__).resolve().parent.parent
+# Add the root directory to sys.path
+sys.path.append(str(root_dir))
+
+
 from ui import display
-import drafting_party
-from combat import combat_game
-#from game_files.output import show_title, show_help, show_version  # Customize these
-#from game_files.player import Player  # Assuming you have a Player class
+from drafting_party import draft_party
+from chapters import chapter1, chapter2
 
 # Metadata
-__version__ = "0.1.0"  # Start with an early version
+__version__ = "0.1.0"
 __date__ = '2023-08-17'  # Today's date
 __author__ = "Your Name"
 __email__ = "your_email@example.com"  # Replace with your information
@@ -20,8 +24,6 @@ if __name__ == '__main__':
 
     # Start the game
     display.show_title()
-    while True:
-        drafting_party.draft_party()
-        combat_game.combat_loop()
-        break
-        # ... game logic will go here ...
+    party = draft_party()
+    party = chapter1(party)
+    chapter2(party)
