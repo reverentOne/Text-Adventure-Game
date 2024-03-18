@@ -98,7 +98,7 @@
       "ally_healing_modifier": 0,
       "self_healing_modifier": 0,
       "hp_modifier": 0,
-      "autoattack_speed_modifier": 0,
+      "autoattack_speed_modifier": 0.05,
       "ability_speed_modifier": 0
     },
     { 

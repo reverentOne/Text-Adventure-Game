@@ -55,8 +55,4 @@ def draft_party():
         print("")
         print(adventurer)
     return adventurers_list
-
-def main():
-    party = draft_party()
-
-main()
+draft_party()

@@ -21,7 +21,6 @@ if __name__ == '__main__':
     # Start the game
     display.show_title()
     while True:
-        drafting_party.draft_party()
         combat.combat()
         break
         # ... game logic will go here ...
