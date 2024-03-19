@@ -1,6 +1,7 @@
 
 import queue
 from objects.enemy_generation import enemy_list
+import random
 #import time
 from drafting_party import draft_party
 time_counter = 0
@@ -12,7 +13,8 @@ def combat_loop(adventurers_list, flr = 0):
     party = adventurers_list.members
     combat_queue = queue.PriorityQueue()
     weakest_adventurer = min(party, key=lambda x: x.health)
-    weakenst_enemy = min(enemy_party, key=lambda x: x.health)
+    strongest_adventurer = max(party, key=lambda x: x.health)
+    weakest_enemy = min(enemy_party, key=lambda x: x.health)
     ability_counters = {} # Initialize a dictionary to keep track of ability counters for each character
 
     #Main combat loop
@@ -36,8 +38,14 @@ def combat_loop(adventurers_list, flr = 0):
             if character in party:
                 ability_counter -= 1
                 if len(enemy_party) != 0:
+                    chance = random.random()
+                    critical = character.critical_chance
+                    if chance <= critical:
+                        damage = character.base_physical_damage*(1+character.critical_damage)
+                    else:
+                        damage = character.base_physical_damage
                     #deal auto attack damage
-                    enemy_party[0].health -= max(1,character.base_physical_damage-enemy_party[0].physical_resistance)
+                    enemy_party[0].health -= max(1,damage-enemy_party[0].physical_resistance)
                     #deal ability damage if available
                     if ability_counter <= 0:
                         enemy_party[0].health -= max(1,character.base_elemental_damage-enemy_party[0].elemental_resists)
@@ -63,19 +71,25 @@ def combat_loop(adventurers_list, flr = 0):
             elif character in enemy_party:
                 ability_counter -= 1
                 if len(party) != 0:
-                    weakest_adventurer.health -= max(1, character.base_physical_damage-weakest_adventurer.physical_resistance)
+                    chance = random.random()
+                    critical = character.critical_chance
+                    if chance <= critical:
+                        damage = character.base_physical_damage*(1+character.critical_damage)
+                    else:
+                        damage = character.base_physical_damage
+                    strongest_adventurer.health -= max(1, damage-strongest_adventurer.physical_resistance)
                     if ability_counter <= 0:
-                        weakest_adventurer.health -= max(1, character.base_elemental_damage-weakest_adventurer.elemental_resists)
+                        strongest_adventurer.health -= max(1, character.base_elemental_damage-strongest_adventurer.elemental_resists)
                         ability_counter = character.ability_speed
                         character.health += character.self_healing
-                        weakenst_enemy.health += character.ally_healing
-                        bleed = weakest_adventurer.bleed_threshold
+                        weakest_enemy.health += character.ally_healing
+                        bleed = strongest_adventurer.bleed_threshold
                         bleed -= character.bleed_threshold_damage
                         if bleed <= 0:
-                            weakest_adventurer.health -= weakest_adventurer.health/10
-                            bleed = weakest_adventurer.bleed_threshold
+                            strongest_adventurer.health -= strongest_adventurer.health/10
+                            bleed = strongest_adventurer.bleed_threshold
                     ability_counters[character] = ability_counter
-                    if weakest_adventurer.health <= 0:
+                    if strongest_adventurer.health <= 0:
                         party.remove(min(party, key=lambda x: x.health))                                 
                         if len(party) == 0:
                             print(f"You have been defeated in {time_counter} seconds.")
