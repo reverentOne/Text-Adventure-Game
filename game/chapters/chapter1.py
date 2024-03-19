@@ -10,20 +10,24 @@ def chapter1(game_state):
             pl = gs["party_list"]
             gs["location"]["name"] = self._location
             gs["game_progress"]["chapter"] = 1
-            gs["game_progress"]["floor"] = 1
-            fl = gs["game_progress"]["floor"]
             #Rest of setting game state
             print("\nWelcome to Chapter 1: The Forest of Beginnings!")
             print("Your task is to find the ancient relic hidden deep within the forest. You are the guide master in charge of finding the right party to complete this task. Good luck!\n\n")
-            while True:
-                party_num = int(input(f"Which party would you like to send? {pl}"))-1
-                party = c.combat_loop(pl[party_num])    #, enemy_list(fl)) #need to define the enemy list function
-                if fl == 5:
-                    gs["game_progress"]["floor"] = fl
-                    pl[party_num] = party
-                    gs["party_list"] = pl
-                    print("You have reached the end of the forest. You have found the ancient relic and have completed Chapter 1.")
-                    break
-                fl += 1
+            party_str = '\n'.join([f"({i+1}) {str(party)}" for i, party in enumerate(pl)])
+            party_num = int(input(f"Which party would you like to send?\n{party_str}\n"))-1
+            print("Your team got a huge temperary booster!!!")
+            boosted_party = pl[party_num].copy()
+            for adventurer in boosted_party:
+                adventurer.health += 10000
+                adventurer.base_physical_damage += 1000
+                adventurer.base_elemental_damage += 1000
+            floor_reached = c.combat_loop(boosted_party)
+            print("Your party reached floor: ", floor_reached)
+
+            print("Now try again without the booster")
+            floor_reached = c.combat_loop(pl[party_num].copy())
+            print("Your party reached floor: ", floor_reached)
+            print("Looks like you need to level up your party and give them items if you want to go further.")
+
     enter()
     return gs

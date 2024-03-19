@@ -1,4 +1,4 @@
-
+import copy
 
 class party:
     def __init__(self, name, members, inventory, level, experience):
@@ -7,6 +7,15 @@ class party:
         self.inventory = inventory
         self.level = level
         self.experience = experience
+
+    def __str__(self) -> str:
+        members_str = ', '.join([f"{member.name} (rated: {member.rating})" for member in self.members])
+        return f"\"{self.name}\" with members {{{members_str}}}"
+    def copy(self):
+        members_copy = copy.deepcopy(self.members) if self.members is not None else []
+        inventory_copy = copy.deepcopy(self.inventory) if self.inventory is not None else []
+        new_party = party(self.name, members_copy, inventory_copy, self.level, self.experience)
+        return new_party
 
     def add_to_party(self, character):
         self.members.append(character)

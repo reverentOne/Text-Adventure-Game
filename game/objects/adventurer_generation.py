@@ -33,12 +33,6 @@ class character_framework:
                 f"{'Elemental Resistance': <25} {self.elemental_resists:<25} {'Ally Healing': <25} {self.ally_healing:<25}\n"
                 f"{'Attack Speed': <25} {self.attack_speed:<25} {'Ability Speed': <25} {self.ability_speed:<25}\n"
                 f"{'Rating': <25} {self.rating:<25}")
-    
- 
- 
-
-
-
 
 def common_adventurer():
     group=random.choice(first_names)+" "+random.choice(last_names)
