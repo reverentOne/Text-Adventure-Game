@@ -4,12 +4,12 @@ from enemy_generation import enemy_list
 import random
 import time
 from drafting_party import draft_party
-def combat_loop(adventurers_list, enemy_party): #make party_list and enemy_list parameters
+def combat_loop(adventurers_list, enemy_party):
     party = adventurers_list 
     combat_queue = queue.PriorityQueue()
     floor = 0
     weakest_adventurer = min(party, key=lambda x: x.health)
-    weakenst_enemy = min(enemy_party, key=lambda x: x.health) # You can''t call enemy_party in Min() when it is empty
+    weakenst_enemy = min(enemy_party, key=lambda x: x.health)
     for adventurer in party:
         combat_queue.put((adventurer.attack_speed, adventurer))
     for enemy in enemy_party:
