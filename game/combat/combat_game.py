@@ -7,7 +7,7 @@ from drafting_party import draft_party
 def combat_loop(adventurers_list): #make party_list and enemy_list parameters
     party = [] # this is unnecessary
     party = adventurers_list 
-    enemy_party = [] # enemy_pary should be parameter, the creation of this party should be done elsewhere (posibly enemy_generation.py or in the chapters)
+    enemy_party = [] # enemy_pary should be parameter, the creation of this party should be done elsewhere (posibly enemy_generation.py or in the chapters or in this file but outside this function)
     if party == None:
         party = draft_party() #this is not needed as adventurers_list will never be empty at this point
     combat_queue = queue.PriorityQueue()
