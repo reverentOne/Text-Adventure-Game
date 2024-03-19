@@ -1,16 +1,19 @@
+
 import queue
-from objects import adventurer_generation
-from objects import enemy_generation
+import enemy_generation
 import random
 import time
 from drafting_party import draft_party
-def combat(a, b): #make party_list and enemy_list parameters
-    enemy_party = [] # enemy_pary should be parameter, the creation of this party should be done elsewhere (posibly enemy_generation.py or in the chapters)
-    party = draft_party() #this is unnecessary. Just call party_list instead of party
+def combat_loop(adventurers_list):
+    party = []
+    party = adventurers_list
+    enemy_party = []
+    if party == None:
+        party = draft_party()
     combat_queue = queue.PriorityQueue()
     floor = 0
     weakest_adventurer = min(party, key=lambda x: x.health)
-    weakenst_enemy = min(enemy_party, key=lambda x: x.health) # You can''t call enemy_party in Min() when it is empty
+    weakenst_enemy = min(enemy_party, key=lambda x: x.health)
     while len(party) >= 0:
         if floor % 5 == 0 and floor != 0:
             enemy_party.append(enemy_generation.boss_enemy_generation())
@@ -27,7 +30,7 @@ def combat(a, b): #make party_list and enemy_list parameters
             time.sleep(1/attack_speed)
             ability_conter = character.ability_speed
             ability_conter -= 1
-            if isinstance(character, adventurer_generation.adventurer_framework): #adventurer_framework is not a parameter so you can't call it like this
+            if isinstance(character, adventurer_generation.adventurer_framework):
                 enemy_party[0].health -= character.damage/enemy_party[0].resist
                 if ability_conter <= 0:
                     enemy_party[0].health -= character.elemental_damage/enemy_party[0].elemental_resists
@@ -41,12 +44,12 @@ def combat(a, b): #make party_list and enemy_list parameters
                         bleed = enemy_party[0].bleed_threshold
                 if enemy_party[0].health <= 0:
                     enemy_party.pop(0)
-                    print(f"{enemy_party(0)} died")
                     if len(enemy_party) == 0:
                         floor += 1
+                        print("You have cleared the floor!")
                         break
 
-            elif isinstance(character, enemy_generation.character_framework): #same as above
+            elif isinstance(character, enemy_generation.character_framework):
                 weakest_adventurer.health -= character.damage/weakest_adventurer.resist
                 if ability_conter <= 0:
                     weakest_adventurer.health -= character.elemental_damage/weakest_adventurer.elemental_resists
@@ -61,9 +64,12 @@ def combat(a, b): #make party_list and enemy_list parameters
                 if weakest_adventurer.health <= 0:
                     party.remove(weakest_adventurer)
                     if len(party) == 0:
+                        print("You have been defeated.")
                         break
     if len(party) == 0:
         return floor
+
+
         
             
         
