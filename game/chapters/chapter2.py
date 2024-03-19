@@ -1,4 +1,4 @@
-from combat import combat
+from combat import combat_game as c
 
 def chapter2(party):
     print("Welcome to Chapter 2: The Caves of Mystery!")

@@ -1,4 +1,4 @@
-from combat import combat
+from combat import combat_game as c
 #Rest of imports needed
 
 def chapter1(game_state):
@@ -17,7 +17,7 @@ def chapter1(game_state):
             print("Your task is to find the ancient relic hidden deep within the forest. You are the guide master in charge of finding the right party to complete this task. Good luck!\n\n")
             while True:
                 party_num = int(input(f"Which party would you like to send? {pl}"))-1
-                party = combat(pl[party_num], enemy_list(fl)) #need to define the enemy list function
+                party = c.combat_loop(pl[party_num])    #, enemy_list(fl)) #need to define the enemy list function
                 if fl == 5:
                     gs["game_progress"]["floor"] = fl
                     pl[party_num] = party
