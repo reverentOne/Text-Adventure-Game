@@ -1,19 +1,19 @@
 
 import queue
-import enemy_generation
+from objects import enemy_generation, adventurer_generation
 import random
 import time
 from drafting_party import draft_party
-def combat_loop(adventurers_list):
-    party = []
-    party = adventurers_list
-    enemy_party = []
+def combat_loop(adventurers_list): #make party_list and enemy_list parameters
+    party = [] # this is unnecessary
+    party = adventurers_list 
+    enemy_party = [] # enemy_pary should be parameter, the creation of this party should be done elsewhere (posibly enemy_generation.py or in the chapters)
     if party == None:
-        party = draft_party()
+        party = draft_party() #this is not needed as adventurers_list will never be empty at this point
     combat_queue = queue.PriorityQueue()
     floor = 0
     weakest_adventurer = min(party, key=lambda x: x.health)
-    weakenst_enemy = min(enemy_party, key=lambda x: x.health)
+    weakenst_enemy = min(enemy_party, key=lambda x: x.health) # You can''t call enemy_party in Min() when it is empty
     while len(party) >= 0:
         if floor % 5 == 0 and floor != 0:
             enemy_party.append(enemy_generation.boss_enemy_generation())
@@ -30,7 +30,7 @@ def combat_loop(adventurers_list):
             time.sleep(1/attack_speed)
             ability_conter = character.ability_speed
             ability_conter -= 1
-            if isinstance(character, adventurer_generation.adventurer_framework):
+            if isinstance(character, adventurer_generation.adventurer_framework):#adventurer_framework is not a parameter so you can't call it like this
                 enemy_party[0].health -= character.damage/enemy_party[0].resist
                 if ability_conter <= 0:
                     enemy_party[0].health -= character.elemental_damage/enemy_party[0].elemental_resists
