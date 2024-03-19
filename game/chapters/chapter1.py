@@ -1,17 +1,29 @@
 from combat import combat
+#Rest of imports needed
 
-def chapter1(party):
-    print("Welcome to Chapter 1: The Forest of Beginnings!")
-    print("You and your party have just entered the forest. You are surrounded by tall trees and the sounds of nature. You have been tasked with finding the ancient relic hidden deep within the forest. You must fight your way through the forest and find the relic.")
-    print("You have entered the first room of the forest. You are immediately attacked by a group of enemies!")
-    floor = 1
-    while True:
-        print("Floor: ", floor)
-        party = combat(party, floor)
-        if len(party) == 0:
-            print("Your party has been defeated. Game Over.")
-            break
-        if floor == 5:
-            print("You have reached the end of the forest. You have found the ancient relic and have completed Chapter 1.")
-            break
-    return party
+def chapter1(game_state):
+    gs=game_state
+    class enter():
+        _location = "forest"
+
+        def __init__(self):
+            pl = gs["party_list"]
+            gs["location"]["name"] = self._location
+            gs["game_progress"]["chapter"] = 1
+            gs["game_progress"]["floor"] = 1
+            fl = gs["game_progress"]["floor"]
+            #Rest of setting game state
+            print("\nWelcome to Chapter 1: The Forest of Beginnings!")
+            print("Your task is to find the ancient relic hidden deep within the forest. You are the guide master in charge of finding the right party to complete this task. Good luck!\n\n")
+            while True:
+                party_num = int(input(f"Which party would you like to send? {pl}"))-1
+                party = combat(pl[party_num], enemy_list(fl)) #need to define the enemy list function
+                if fl == 5:
+                    gs["game_progress"]["floor"] = fl
+                    pl[party_num] = party
+                    gs["party_list"] = pl
+                    print("You have reached the end of the forest. You have found the ancient relic and have completed Chapter 1.")
+                    break
+                fl += 1
+    enter()
+    return gs

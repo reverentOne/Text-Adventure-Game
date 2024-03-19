@@ -1,7 +1,7 @@
 from objects import adventurer_generation
 #import enemy_generation
 import random
-
+from objects.party import party
 
 def generator(odds):
 
@@ -54,4 +54,8 @@ def draft_party():
     for adventurer in adventurers_list:
         print("")
         print(adventurer)
-    return adventurers_list
+    name = input("\nName your party:")
+
+
+
+    return party(name, adventurers_list, None, 1, 0)

@@ -8,4 +8,4 @@ def on_off_to_string(bool):
     if bool: return 'on'
     return 'off'
 
-def show_
+# def show_
