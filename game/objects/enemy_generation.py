@@ -78,3 +78,11 @@ def enemy_generator():
                                        self_healing, healing, autoattack_speed, ability_speed)
     return enemy
 
+def enemy_list(floor):
+    enemy_party = []
+    if floor % 5 == 0 and floor != 0:
+        enemy_party.append(boss_enemy_generation())
+    else:
+      for i in range(floor):
+          enemy_party.append(enemy_generator())
+    return enemy_party
