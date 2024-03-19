@@ -1,6 +1,5 @@
 import random
 
-floor = 0
 boss_first_name = """ "Thuzuxeith", "Peercanam", "Lisantam","Dorlgughix",
 "Sezelcolchung", "Sustuthoseb", "Cablithrum",
 "Dwepazam", "Abrex", "Boblirchu","Sustuthoseb", 
@@ -37,7 +36,7 @@ class character_framework:
         self.attack_speed = autoattack_speed
         self.ability_speed = ability_speed
 
-def boss_enemy_generation():
+def boss_enemy_generator(floor):
     name = random.choice(boss_first_name) + random.choice(boss_title)
     health = random.randint(10, floor * 100 + 10)
     damage = random.randint(0, 3 * floor + 10)
@@ -57,7 +56,7 @@ def boss_enemy_generation():
                                      bleed_threshold,critical_chance, critical_damage,
                                        self_healing, healing, autoattack_speed, ability_speed)
     return boss_enemy
-def enemy_generator():
+def enemy_generator(floor):
     name = random.choice(enemy_first_name)
     health = random.randint(10, floor * 10 + 10)
     damage = random.randint(0, 3 * floor)
@@ -81,8 +80,8 @@ def enemy_generator():
 def enemy_list(floor):
     enemy_party = []
     if floor % 5 == 0 and floor != 0:
-        enemy_party.append(boss_enemy_generation())
+        enemy_party.append(boss_enemy_generator(floor))
     else:
-      for i in range(floor):
-          enemy_party.append(enemy_generator())
+      for i in range(random.randint(1, 5)):
+          enemy_party.append(enemy_generator(floor))
     return enemy_party
