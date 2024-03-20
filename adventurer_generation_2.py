@@ -135,7 +135,9 @@ def character():
                                                 [0,0,0],
                                                 [0,0,0],
                                                 [0,0,0]])
-                    level_up_points_matrix[choice-1][choice//4] += level_up_matrix[choice-1][choice//4]
+                    column = choice%3
+                    row = -1 -3*column
+                    level_up_points_matrix[row][column] += level_up_matrix[row][column]
                     level_up_points -= 1
     character_matrix += level_up_points_matrix
     while star_shards > 100 and star < 5: #star up not sure if this works or if it needs to be in another function
