@@ -1,8 +1,10 @@
-from combat import combat_game as c
+from idle_gameplay import IdleGameplay
+import time
 #Rest of imports needed
 
 def chapter1(game_state):
     gs=game_state
+    idle_gameplay = IdleGameplay(gs)
     class enter():
         _location = "forest"
 
@@ -15,18 +17,26 @@ def chapter1(game_state):
             print("Your task is to find the ancient relic hidden deep within the forest. You are the guide master in charge of finding the right party to complete this task. Good luck!\n\n")
             party_str = '\n'.join([f"({i+1}) {str(party)}" for i, party in enumerate(pl)])
             party_num = int(input(f"Which party would you like to send?\n{party_str}\n"))-1
+
             print("Your team got a huge temperary booster!!!")
             boosted_party = pl[party_num].copy()
             for adventurer in boosted_party:
                 adventurer.health += 10000
                 adventurer.base_physical_damage += 1000
                 adventurer.base_elemental_damage += 1000
-            floor_reached = c.combat_loop(boosted_party)
-            print("Your party reached floor: ", floor_reached)
 
+            idle_gameplay.start_adventure(boosted_party)
+
+            print("Lets speed up the adventure by spending one diamond!")
+            idle_gameplay.reduce_adventure_duration(0, 600000)
+            print("...")
+            time.sleep(2)
             print("Now try again without the booster")
-            floor_reached = c.combat_loop(pl[party_num].copy())
-            print("Your party reached floor: ", floor_reached)
+            adventure_thread = idle_gameplay.start_adventure(pl[party_num].copy())
+            print("Great! Now wait a few seconds for the adventure to finish.")
+
+            # Wait for the adventure thread to finish before executing code under join()
+            adventure_thread.join()
             print("Looks like you need to level up your party and give them items if you want to go further.")
 
     enter()

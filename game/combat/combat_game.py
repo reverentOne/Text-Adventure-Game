@@ -92,8 +92,8 @@ def combat_loop(adventurers_list, flr = 0):
                     if strongest_adventurer.health <= 0:
                         party.remove(min(party, key=lambda x: x.health))                                 
                         if len(party) == 0:
-                            print(f"You have been defeated in {time_counter} seconds.")
+                            #print(f"You have been defeated in {time_counter} seconds.")
                             break           
             else:
                 break
-    return floor
+    return floor, time_counter

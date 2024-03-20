@@ -32,6 +32,10 @@ def create_initial_game_state():
             'hud': True,
             'difficulty': 'normal',
             'art/ascii': True
+        },
+        'loot': {
+            'gold': 0,
+            'items': []
         }
     }
 def exit_game(save_state):
