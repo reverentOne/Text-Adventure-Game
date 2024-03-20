@@ -31,12 +31,14 @@ def chapter1(game_state):
             idle_gameplay.reduce_adventure_duration(0, 600000)
             print("...")
             time.sleep(2)
-            print("Now try again without the booster")
+            print("\nNow try again without the booster")
             adventure_thread = idle_gameplay.start_adventure(pl[party_num].copy())
             print("Great! Now wait a few seconds for the adventure to finish.")
 
             # Wait for the adventure thread to finish before executing code under join()
             adventure_thread.join()
+            print("\nWell that wasn't great...")
+            time.sleep(1)
             print("Looks like you need to level up your party and give them items if you want to go further.")
 
     enter()

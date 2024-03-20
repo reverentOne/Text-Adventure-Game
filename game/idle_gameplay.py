@@ -48,7 +48,7 @@ class IdleGameplay:
         self.game_state['loot']['items'].append(rewards['loot'])
 
         # Print a message that the party has returned
-        print(f"{party.name} has returned from their adventure after {int(self.calculate_adventure_duration(time_counter))} days. They reached floor {floor_reached} and collected {rewards['gold']} gold and {len(rewards['loot'])} item(s).")
+        print(f"\n(Alert) {party.name} has returned from their adventure after {int(self.calculate_adventure_duration(time_counter))} days. They reached floor {floor_reached} and collected {rewards['gold']} gold and {len(rewards['loot'])} item(s).")
 
     def calculate_rewards(self, party, floor_reached):
         base_gold_reward = 10
