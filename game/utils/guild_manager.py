@@ -62,12 +62,6 @@ class PartyManager:
     def view_party_stats(self):
         # Implement viewing the stats of the party
 
-    def recruit_adventurer(self, adventurer):
-        # Implement recruiting a new adventurer to the party
-
-    def dismiss_adventurer(self, adventurer):
-        # Implement dismissing an adventurer from the party
-
 class ItemManager:
     def __init__(self, game_state):
         self.game_state = game_state
