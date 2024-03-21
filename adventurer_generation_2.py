@@ -1,5 +1,6 @@
 import random
 import numpy
+from item_generation import weapon_generation, armor_generation, accessory_generation
 rarity_multiplier = {
     'common': 1 ,
     'uncommon': 2,
@@ -33,6 +34,8 @@ class character_framework:
         self.star_shards = 0
         self.star = 0
         self.status = None
+        self.equipment_slots_types = numpy.array(['weapon','armor','accessory']) #types of equipment in slots can be expanded
+        self.equipment_slots = numpy.array([None,None,None]) #slots for equipment
         self.rarity = None
         self.health = health
         self.base_physical_damage = damage 
@@ -49,6 +52,11 @@ class character_framework:
         self.ability_speed = ability_speed
         self.unique_nature = None
         self.rating = round(health/10 + damage + elemental_damage + bleed_threshold_damage/3 + resist/5 + elemental_resists/5 + bleed_threshold/100 + critical_chance + critical_damage + self_healing + healing + ability_speed/150)
+        self.attribute_matrix = numpy.array([[health, damage, elemental_damage], 
+                                    [bleed_threshold_damage, resist, elemental_resists],
+                                    [bleed_threshold, critical_chance, critical_damage],
+                                    [self_healing, healing, autoattack_speed],
+                                    [ability_speed,0,0]])
 
     def __str__(self):
         return (f"{'Name': <25} {self.name:<25} {'Bleed Threshold Damage': <25} {self.bleed_threshold_damage:<25}\n"
@@ -72,6 +80,26 @@ class character_framework:
         chance = random.uniform(1,100)
         if chance <= 5:
             status = 'unique' #5% chance of being unique
+            
+    def equiping(self, item): #equips an item. I'm not sure if i can call the item_matrix from the item class or iff i need to define it in the weapon generation
+        if item.item_type in self.equipment_slots_types:
+            self.equipment_slots[self.equipment_slots_types.index(item.item_type)] = item
+            item_attributes_matrix = item.item_matrix
+            self.attribute_matrix += item_attributes_matrix
+        else:
+            print(f"{item.item_type} is not a valid item type")
+
+    def unequiping(self, item):
+        if item in self.equipment_slots:
+            self.equipment_slots[self.equipment_slots.index(item)] = None
+            item_attributes_matrix = item.item_matrix
+            self.attribute_matrix -= item_attributes_matrix
+        else:
+            print(f"{item} is not equipped")
+    
+
+        
+
     
 def character():
     rarity = character_framework.rarity_chance(character_framework)
