@@ -80,7 +80,7 @@ class character_framework:
         chance = random.uniform(1,100)
         if chance <= 5:
             status = 'unique' #5% chance of being unique
-            
+
     def equiping(self, item): #equips an item. I'm not sure if i can call the item_matrix from the item class or iff i need to define it in the weapon generation
         if item.item_type in self.equipment_slots_types:
             self.equipment_slots[self.equipment_slots_types.index(item.item_type)] = item
@@ -164,7 +164,7 @@ def character():
                                                 [0,0,0],
                                                 [0,0,0]])
                     column = choice%3
-                    row = -1 -3*column
+                    row = choice-1 -3*column
                     level_up_points_matrix[row][column] += level_up_matrix[row][column]
                     level_up_points -= 1
     character_matrix += level_up_points_matrix
@@ -175,6 +175,6 @@ def character():
             [10*int(rarity_multiplier[rarity]), 2*int(rarity_multiplier[rarity]), 2*int(rarity_multiplier[rarity])],
             [2*int(rarity_multiplier[rarity]) , 2*int(rarity_multiplier[rarity]), 2*int(rarity_multiplier[rarity])],
             [10*int(rarity_multiplier[rarity]), .01*int(rarity_multiplier[rarity]), .01*int(rarity_multiplier[rarity])],
-            [-3*int(rarity_multiplier[rarity]),0,0]])#not sure if this matrix addition works or if I need to first convert the original attributes into a matrix
+            [-3*int(rarity_multiplier[rarity]),0,0]]) #not sure if this matrix addition works or if I need to first convert the original attributes into a matrix
     return character
 print(character())

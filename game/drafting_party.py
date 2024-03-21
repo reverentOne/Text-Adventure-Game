@@ -2,19 +2,8 @@ from objects import adventurer_generation
 #import enemy_generation
 import random
 from objects.party import party
-
-def generator(odds):
-
-    if odds < 45:
-        return adventurer_generation.common_adventurer()
-    elif odds < 60:
-        return adventurer_generation.uncommon_adventurer()
-    elif odds <80:
-        return adventurer_generation.rare_adventurer()
-    elif odds < 95:
-        return adventurer_generation.epic_adventurer()
-    else:
-        return adventurer_generation.legendary_adventurer()
+import numpy
+from adventurer_generation_2 import character
 
 def draft_party():
     adventurers_list = []
@@ -24,7 +13,7 @@ def draft_party():
         adventurers_draft_list = []
         for _ in range(3):  
             print("Adventurer " + str(_+1), "\n")
-            new_adventurer = generator(random.randint(0,100))
+            new_adventurer = character()
             print(new_adventurer, "\n")
             adventurers_draft_list.append(new_adventurer)
         while True:
@@ -55,7 +44,7 @@ def draft_party():
         print("")
         print(adventurer)
     name = input("\nName your party:")
+    party_array = numpy.array(adventurers_list) #convert list to array so it can be used in a matrix with your other parties
 
 
-
-    return party(name, adventurers_list, None, 1, 0)
+    return party(name, adventurers_list, party_array, None, 1, 0)
