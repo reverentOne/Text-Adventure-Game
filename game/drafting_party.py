@@ -1,6 +1,7 @@
 from objects import adventurer_generation
 #import enemy_generation
 import random
+from game.utils.guild_manager import GuildManager
 from objects.party import party
 import numpy
 from adventurer_generation_2 import character
@@ -71,4 +72,5 @@ def draft_party():
         print(adventurer)
     name = input("\nName your party:")
     party_array = numpy.array(adventurers_list) #convert list to array so it can be used in a matrix with your other parties
+    GuildManager.guild_members(party_array, name)
     return party(name, adventurers_list, None, 1, 0), party_array

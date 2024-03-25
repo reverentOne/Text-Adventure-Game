@@ -65,7 +65,7 @@ class character_framework:
                 f"{'Base Elemental Damage': <25} {self.base_elemental_damage:<25} {'Critical Damage': <25} {self.critical_damage:<25}\n"
                 f"{'Physical Resistance': <25} {self.physical_resistance:<25} {'Self Healing': <25} {self.self_healing:<25}\n"
                 f"{'Elemental Resistance': <25} {self.elemental_resists:<25} {'Ally Healing': <25} {self.ally_healing:<25}\n"
-                f"{'Attack Speed': <25} {self.attack_speed:<25} {'Ability Speed': <25} {ability_speed:<25}\n"
+                f"{'Attack Speed': <25} {self.attack_speed:<25} {'Ability Speed': <25} {self.ability_speed:<25}\n"
                 f"{'Rating': <25} {self.rating:<25}")
 
     nature_attributes = numpy.array([

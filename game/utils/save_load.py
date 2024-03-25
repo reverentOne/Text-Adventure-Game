@@ -1,4 +1,4 @@
-import pickle, os, sys
+import pickle, os, sys, numpy
 
 def save_game(game_state):
     with open('assets/data/game_state.pkl', 'wb') as f:
@@ -14,7 +14,9 @@ def load_game():
 def create_initial_game_state():
     # Define the initial game state here
     return {
-        'party_list': [],
+        'guild_size': 5,
+        'guild_member_matrix': numpy.zeros((5, 4), dtype=object),
+        'guild_party_name_matrix': numpy.zeros((5, 1), dtype=object),
         'location': {
             'name': "",
             'description': "",
@@ -35,7 +37,17 @@ def create_initial_game_state():
         },
         'loot': {
             'gold': 0,
-            'items': []
+            'inventory': numpy.zeros((5, 5), dtype=object),
+            'common experience': 0,
+            'uncommon experience': 0,
+            'rare experience': 0,
+            'epic experience': 0,
+            'legendary experience': 0,
+            'common shards': 0,
+            'uncommon shards': 0,
+            'rare shards': 0,
+            'epic shards': 0,
+            'legendary shards': 0
         }
     }
 def exit_game(save_state):

@@ -1,5 +1,6 @@
 import json
 import random
+import numpy
 from enum import Enum
 class rarity(Enum): 
     common = 1
@@ -38,7 +39,12 @@ class item_framework:
         self.healing = healing
         self.autoattack_speed = autoattack_speed
         self.ability_speed = ability_speed
-        self.item_type = item_type
+        self.item_type = item_type  
+        self.item_matrix = numpy.array([[self.health, self.damage, self.elemental_damage],
+                                        [self.bleed_threshold_damage, self.resist, self.elemental_resists],
+                                        [self.bleed_threshold, self.critical_chance, self.critical_damage],
+                                        [self.self_healing, self.healing, self.autoattack_speed],
+                                        [self.ability_speed,0,0]]) # created the item matrix, i don't know if this should be here or in the functions
     def __str__(self):
         return f"{self.name} is a {self.rarity.name} item with {self.health} health, {self.damage} damage, {self.elemental_damage} elemental damage, {self.bleed_threshold_damage} bleed threshold damage, {self.resist} resist, {self.elemental_resists} elemental resists, {self.bleed_threshold} bleed threshold, {self.critical_chance} critical chance, {self.critical_damage} critical damage, {self.self_healing} self healing, {self.healing} healing, {self.autoattack_speed} autoattack speed, and {self.ability_speed} ability speed."
     def __eq__(self, other):

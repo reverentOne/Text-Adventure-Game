@@ -17,10 +17,10 @@ class party:
         new_party = party(self.name, members_copy, inventory_copy, self.level, self.experience)
         return new_party
 
-    def add_to_party(self, character):
+    #def add_to_party(self, character): these are already in guild manager
         self.members.append(character)
 
-    def remove_from_party(self, character):
+    #def remove_from_party(self, character):
         self.members.remove(character)
 
     def weakest_adventurer(self):

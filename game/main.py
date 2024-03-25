@@ -26,6 +26,8 @@ if __name__ == '__main__':
     # Start the game
     di.show_title()
     gs = sl.load_game()
-    if len(gs["party_list"]) == 0: gs["party_list"].append(draft_party())
+    if len(gs['guild_party_name_matrix'][0]) == 0: draft_party()
+    print(gs['guild_party_name_matrix'])
     gs = chapter1.chapter1(gs)
     sl.exit_game(gs)
+    
