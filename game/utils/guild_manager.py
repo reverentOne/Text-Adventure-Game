@@ -1,12 +1,11 @@
 import numpy
-import drafting_party
-from adventurer_generation_2 import character_framework
-import inventory
+
+from objects.adventurer_generation_2 import character_framework
+
 
 class GuildManager:
     def __init__(self, game_state):
         self.game_state = game_state
-
     def guild_members(self,party_array,name): #adds a party to the guild
         for i in range(int(self.game_state['guild_size'])):
             if numpy.all(self.game_state['guild_member_matrix'][i] == 0):
@@ -75,6 +74,7 @@ class PartyManager:
                             if self.game_state['loot']['inventory'] == item:
                                 self.game_state['loot']['inventory'][a][b] = 0
                                 return True
+                            
     def unequip_item(self, character, item):
         for a in range(int(self.game_state['guild_size'])):
             for b in range(int(self.game_state['guild_size'])):
@@ -85,7 +85,6 @@ class PartyManager:
                             if self.game_state['loot']['inventory'] == 0:
                                 self.game_state['loot']['inventory'][a][b] = item
                                 return True
-
 
     def view_party_stats(self):
         selected_party = int(input("Which party would you like to view? "))

@@ -1,10 +1,10 @@
-from objects import adventurer_generation
+
 #import enemy_generation
 import random
-from game.utils.guild_manager import GuildManager
+from utils.guild_manager import GuildManager
 from objects.party import party
 import numpy
-from adventurer_generation_2 import character
+from objects.adventurer_generation_2 import character
 # draft a single character
 def draft_character():
     print("Pick your adventurer! You will get a choice from 3 random adventurers. Choose wisely and good luck!\n")
@@ -22,17 +22,17 @@ def draft_character():
         else:
             print("That is not an option.\n")
     if choice == 1:
-        character = adventurers_draft_list[0]
+        new_adventurer = adventurers_draft_list[0]
     elif choice == 2:
-        character = adventurers_draft_list[1]
+        new_adventurer = adventurers_draft_list[1]
     elif choice == 3:
-        character = adventurers_draft_list[2]
+        new_adventurer = adventurers_draft_list[2]
     print("You have chosen your adventurer.", "\n\n")
-    print(character)
-    return character
+    print(adventurers_draft_list[0])
+    return adventurers_draft_list[0]
 
 #draft a party of 4 characters
-def draft_party():
+def draft_party(game_state):
     adventurers_list = []
     print("Welcome to your Adventurer Draft! Draft a party of 4 adventurers. You will get a choice from 3 random adventurers in each of 4 rounds. Choose wisely and good luck!\n")
     for _ in range(4):  
@@ -72,5 +72,6 @@ def draft_party():
         print(adventurer)
     name = input("\nName your party:")
     party_array = numpy.array(adventurers_list) #convert list to array so it can be used in a matrix with your other parties
-    GuildManager.guild_members(party_array, name)
+    new_party= GuildManager(game_state)
+    new_party.guild_members(party_array, name)
     return party(name, adventurers_list, None, 1, 0), party_array

@@ -1,5 +1,7 @@
 from idle_gameplay import IdleGameplay
 import time
+import numpy
+from utils import save_load
 #Rest of imports needed
 
 def chapter1(game_state):
@@ -9,17 +11,17 @@ def chapter1(game_state):
         _location = "forest"
 
         def __init__(self):
-            pl = gs["party_list"]
+            pl = gs["guild_member_matrix"]
             gs["location"]["name"] = self._location
             gs["game_progress"]["chapter"] = 1
             #Rest of setting game state
             print("\nWelcome to Chapter 1: The Forest of Beginnings!")
             print("Your task is to find the ancient relic hidden deep within the forest. You are the guide master in charge of finding the right party to complete this task. Good luck!\n\n")
-            party_str = '\n'.join([f"({i+1}) {str(party)}" for i, party in enumerate(pl)])
+            party_str = '\n'.join([f"({i+1}) {str(party)}" for i, party in enumerate(gs["guild_party_name_matrix"][0])])
             party_num = int(input(f"Which party would you like to send?\n{party_str}\n"))-1
 
             print("Your team got a huge temperary booster!!!")
-            boosted_party = pl[party_num].copy()
+            boosted_party = numpy.copy(pl[party_num])
             for adventurer in boosted_party:
                 adventurer.health += 10000
                 adventurer.base_physical_damage += 1000

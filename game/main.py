@@ -4,7 +4,7 @@ root_dir = pathlib.Path(__file__).resolve().parent.parent
 # Add the root directory to sys.path
 sys.path.append(str(root_dir))
 
-
+import numpy
 from ui import display as di
 from drafting_party import draft_party
 from chapters import chapter1, chapter2
@@ -26,7 +26,9 @@ if __name__ == '__main__':
     # Start the game
     di.show_title()
     gs = sl.load_game()
-    if len(gs['guild_party_name_matrix'][0]) == 0: draft_party()
+    if numpy.all(gs['guild_party_name_matrix'][0]==0):
+        draft_party(gs)
+        gs=chapter1.chapter1(gs)
     print(gs['guild_party_name_matrix'])
     gs = chapter1.chapter1(gs)
     sl.exit_game(gs)

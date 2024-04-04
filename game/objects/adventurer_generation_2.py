@@ -1,6 +1,6 @@
 import random
 import numpy
-from item_generation import weapon_generation, armor_generation, accessory_generation
+
 rarity_multiplier = {
     'common': 1 ,
     'uncommon': 2,
@@ -132,6 +132,12 @@ def character():
                  critical_chance, critical_damage, self_healing, healing,autoattack_speed,ability_speed)
     if experience >= experience_requirements: #level up not sure if this works or if it needs to be in another function
         level_up_points = 5
+        level_up_matrix = numpy.array([
+                            [random.randint(1,15),random.randint(1,3),random.randint(1,3)], 
+                            [random.randint(1,3),random.randint(1,3),random.randint(1,3)],
+                            [random.randint(10,20),random.uniform(0,.01),random.uniform(0,.01)],
+                            [random.randint(0,2),random.randint(0,2),random.uniform(0,0.01)],
+                            [random.randint(-5,0),0,0]])
         while level_up_points > 0:
             experience_requirements +=20*rarity_multiplier[rarity]
             print("1. Health")
@@ -151,12 +157,6 @@ def character():
                 print(f"You have {level_up_points} points left to spend")
                 for i in range(0,level_up_points):
                     choice = int(input("What would you like to level up? "))
-                    level_up_matrix = numpy.array([
-                                                [random.randint(1,15),random.randint(1,3),random.randint(1,3)], 
-                                                [random.randint(1,3),random.randint(1,3),random.randint(1,3)],
-                                                [random.randint(10,20),random.uniform(0,.01),random.uniform(0,.01)],
-                                                [random.randint(0,2),random.randint(0,2),random.uniform(0,0.01)],
-                                                [random.randint(-5,0),0,0]])
                     level_up_points_matrix = numpy.array([
                                                 [0,0,0], 
                                                 [0,0,0],
@@ -167,7 +167,7 @@ def character():
                     row = choice-1 -3*column
                     level_up_points_matrix[row][column] += level_up_matrix[row][column]
                     level_up_points -= 1
-    character_matrix += level_up_points_matrix
+        character_matrix += level_up_points_matrix
     while star_shards > 100 and star < 5: #star up not sure if this works or if it needs to be in another function
         star_shards = 0
         star += 1
