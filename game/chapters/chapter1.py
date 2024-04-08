@@ -18,7 +18,7 @@ def chapter1(game_state):
             party_str = '\n'.join([f"({i+1}) {str(party)}" for i, party in enumerate(pl)])
             party_num = int(input(f"Which party would you like to send?\n{party_str}\n"))-1
 
-            print("Your team got a huge temperary booster!!!")
+            print("Your team got a huge temporary booster!!!")
             boosted_party = pl[party_num].copy()
             for adventurer in boosted_party:
                 adventurer.health += 10000
