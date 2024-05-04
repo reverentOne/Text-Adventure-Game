@@ -16,17 +16,12 @@ def chapter1(game_state):
             gs["game_progress"]["chapter"] = 1
             #Rest of setting game state
             print("\nWelcome to Chapter 1: The Forest of Beginnings!")
-            print("Your task is to find the ancient relic hidden deep within the forest. You are the guild master in charge of finding the right party to complete this task. Good luck!\n\n")
-            party_str = '\n'.join([f"({i+1}) {str(party)}" for i, party in enumerate(gs["guild_party_name_matrix"][0])])
-            party_num = None
-            while party_num is None or party_num >= len(pl) or party_num < 0 or numpy.all(pl[party_num]==0) is True:
-                try:
-                    party_num = int(input(f"Which party would you like to send?\n{party_str}\n")) - 1
-                except ValueError:
-                    print("Invalid input. Please try again.\n")   
-            print("Your team got a huge temperary booster!!!")
+            print("Your task is to find the ancient relic hidden deep within the forest. You are the guide master in charge of finding the right party to complete this task. Good luck!\n\n")
+            party_str = '\n'.join([f"({i+1}) {str(party)}" for i, party in enumerate(pl)])
+            party_num = int(input(f"Which party would you like to send?\n{party_str}\n"))-1
 
-            boosted_party = numpy.copy(pl[party_num])
+            print("Your team got a huge temporary booster!!!")
+            boosted_party = pl[party_num].copy()
             for adventurer in boosted_party:
                 adventurer.health += 10000
                 adventurer.base_physical_damage += 1000
