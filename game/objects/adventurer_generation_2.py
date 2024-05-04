@@ -26,9 +26,10 @@ class character_framework:
         else:
             return 'legendary'
         
-    def __init__(self,name,experience_requirements,experience, health, damage,elemental_damage,bleed_threshold_damage, resist, elemental_resists,bleed_threshold,
+    def __init__(self,name,level,experience_requirements,experience, health, damage,elemental_damage,bleed_threshold_damage, resist, elemental_resists,bleed_threshold,
                  critical_chance, critical_damage, self_healing, healing,autoattack_speed,ability_speed):
         self.name = name
+        self.level = level
         self.experience_requirements = experience_requirements
         self.experience = experience
         self.star_shards = 0
@@ -96,6 +97,8 @@ class character_framework:
             self.attribute_matrix -= item_attributes_matrix
         else:
             print(f"{item} is not equipped")
+    def __lt__(self, other):
+        return self.attack_speed < other.attack_speed
     
 
         
@@ -103,8 +106,9 @@ class character_framework:
     
 def character():
     rarity = character_framework.rarity_chance(character_framework)
+    level = 1
     name = random.choice(character_framework.first_names) + ' ' + random.choice(character_framework.last_names)
-    experience_requirements = 100*int(rarity_multiplier[rarity])
+    experience_requirements = 100*int(rarity_multiplier[rarity])*level
     experience = 0
     star_shards = 0
     star = 0
@@ -128,7 +132,7 @@ def character():
                                     [ability_speed,0,0]]) #makes a matrix of the characters attributes
     if character_framework.unique(character_framework) == 'unique':
         character_matrix += character_framework.nature_attributes(character_framework) #adds unique attributes if the character is unique
-    character = character_framework(name,experience_requirements,experience, health, damage,elemental_damage,bleed_threshold_damage, resist, elemental_resists,bleed_threshold,
+    character = character_framework(level,name,experience_requirements,experience, health, damage,elemental_damage,bleed_threshold_damage, resist, elemental_resists,bleed_threshold,
                  critical_chance, critical_damage, self_healing, healing,autoattack_speed,ability_speed)
     if experience >= experience_requirements: #level up not sure if this works or if it needs to be in another function
         level_up_points = 5
@@ -176,5 +180,6 @@ def character():
             [2*int(rarity_multiplier[rarity]) , 2*int(rarity_multiplier[rarity]), 2*int(rarity_multiplier[rarity])],
             [10*int(rarity_multiplier[rarity]), .01*int(rarity_multiplier[rarity]), .01*int(rarity_multiplier[rarity])],
             [-3*int(rarity_multiplier[rarity]),0,0]]) #not sure if this matrix addition works or if I need to first convert the original attributes into a matrix
+    level+=1
     return character
 print(character())

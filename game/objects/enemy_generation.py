@@ -1,6 +1,6 @@
 import random
 from objects.adventurer_generation import character_framework
-
+import numpy
 boss_first_name = """ "Thuzuxeith", "Peercanam", "Lisantam","Dorlgughix",
 "Sezelcolchung", "Sustuthoseb", "Cablithrum",
 "Dwepazam", "Abrex", "Boblirchu","Sustuthoseb", 
@@ -66,4 +66,4 @@ def enemy_list(floor):
     else:
       for i in range(random.randint(1, 5)):
           enemy_party.append(enemy_generator(floor))
-    return enemy_party
+    return numpy.array(enemy_party)

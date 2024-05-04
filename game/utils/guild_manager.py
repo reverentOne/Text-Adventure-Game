@@ -102,6 +102,14 @@ class ItemManager:
     def sell_item(self, item):
         # Implement selling an item
         pass
+    def add_item_to_inventory(self,item): # adds an item to the inventory
+        for a in range(5):
+            for b in range(5):
+                if self.game_state['loot']['inventory'][a][b] == 0:
+                    self.game_state['loot']['inventory'][a][b] = item
+                    return True
+        else:
+            print("Inventory is full.")
     def view_items(self):
         for a in range(5):
             for b in range(5):

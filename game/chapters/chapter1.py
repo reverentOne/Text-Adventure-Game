@@ -16,11 +16,16 @@ def chapter1(game_state):
             gs["game_progress"]["chapter"] = 1
             #Rest of setting game state
             print("\nWelcome to Chapter 1: The Forest of Beginnings!")
-            print("Your task is to find the ancient relic hidden deep within the forest. You are the guide master in charge of finding the right party to complete this task. Good luck!\n\n")
+            print("Your task is to find the ancient relic hidden deep within the forest. You are the guild master in charge of finding the right party to complete this task. Good luck!\n\n")
             party_str = '\n'.join([f"({i+1}) {str(party)}" for i, party in enumerate(gs["guild_party_name_matrix"][0])])
-            party_num = int(input(f"Which party would you like to send?\n{party_str}\n"))-1
-
+            party_num = None
+            while party_num is None or party_num >= len(pl) or party_num < 0 or numpy.all(pl[party_num]==0) is True:
+                try:
+                    party_num = int(input(f"Which party would you like to send?\n{party_str}\n")) - 1
+                except ValueError:
+                    print("Invalid input. Please try again.\n")   
             print("Your team got a huge temperary booster!!!")
+
             boosted_party = numpy.copy(pl[party_num])
             for adventurer in boosted_party:
                 adventurer.health += 10000
@@ -32,15 +37,15 @@ def chapter1(game_state):
             print("Lets speed up the adventure by spending one diamond!")
             idle_gameplay.reduce_adventure_duration(0, 600000)
             print("...")
-            time.sleep(2)
+            #time.sleep(2)
             print("\nNow try again without the booster")
-            adventure_thread = idle_gameplay.start_adventure(pl[party_num].copy())
+            adventure_thread = idle_gameplay.start_adventure(numpy.copy(pl[party_num]))
             print("Great! Now wait a few seconds for the adventure to finish.")
 
             # Wait for the adventure thread to finish before executing code under join()
             adventure_thread.join()
             print("\nWell that wasn't great...")
-            time.sleep(1)
+            #time.sleep(1)
             print("Looks like you need to level up your party and give them items if you want to go further.")
 
     enter()

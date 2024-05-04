@@ -2,6 +2,7 @@
 import queue
 from objects.enemy_generation import enemy_list
 import random
+import numpy
 #import time
 from drafting_party import draft_party
 time_counter = 0
@@ -9,8 +10,8 @@ def combat_loop(adventurers_list, flr = 0):
     global time_counter
     if flr == 0: time_counter = 0
     floor = flr
-    enemy_party = enemy_list(floor)
-    party = adventurers_list.members
+    enemy_party = enemy_list(floor).tolist()
+    party = adventurers_list
     combat_queue = queue.PriorityQueue()
     weakest_adventurer = min(party, key=lambda x: x.health)
     strongest_adventurer = max(party, key=lambda x: x.health)
@@ -65,7 +66,7 @@ def combat_loop(adventurers_list, flr = 0):
                         #if no more enemies, go to next floor
                         if len(enemy_party) == 0:
                             floor += 1
-                            adventurers_list.members = party
+                            adventurers_list = party
                             return combat_loop(adventurers_list, floor)
 
             elif character in enemy_party:
@@ -90,7 +91,7 @@ def combat_loop(adventurers_list, flr = 0):
                             bleed = strongest_adventurer.bleed_threshold
                     ability_counters[character] = ability_counter
                     if strongest_adventurer.health <= 0:
-                        party.remove(min(party, key=lambda x: x.health))                                 
+                        party = numpy.delete(party, numpy.where(party == strongest_adventurer))                                 
                         if len(party) == 0:
                             #print(f"You have been defeated in {time_counter} seconds.")
                             break           

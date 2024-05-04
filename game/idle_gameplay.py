@@ -34,7 +34,7 @@ class IdleGameplay:
     def adventure(self, party, duration, floor_reached, stop_event, time_counter):
         # Sleep for the duration of the adventure
         while not stop_event.is_set() and duration > 0:
-            time.sleep(1)
+            #time.sleep(1)
             duration -= 1
             if self.reduce_duration:  # if the reduce_duration flag is set
                 duration -= self.reduce_amount  # reduce the duration
@@ -75,11 +75,14 @@ class IdleGameplay:
 
             #generate item
             if item_type == 'weapon':
-                loot_reward.append(weapon_generation(item['name'], party.level))
+                for character in party:
+                    loot_reward.append(accessory_generation(character.level, item['name']))
             elif item_type == 'armor':
-                loot_reward.append(armor_generation(item['name'], party.level))
+                for character in party:
+                    loot_reward.append(accessory_generation(character.level, item['name']))
             elif item_type == 'accessory':
-                loot_reward.append(accessory_generation(item['name'], party.level))
+                for character in party:
+                    loot_reward.append(accessory_generation(character.level, item['name']))
 
         return {"gold": gold_reward, "loot": loot_reward}
 

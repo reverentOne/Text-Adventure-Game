@@ -53,14 +53,14 @@ class item_framework:
         return False
 
 def rarity_odds(level):
-    if level <= 5:
+    if int(level) <= 5:
         return {
             'common': 1 - 0.1,
             'uncommon': 0.09,
             'rare': 0.01,
             'epic': 0
         }
-    elif level <=10:
+    elif int(level) <=10:
         return {
             'common': 1 - 0.01 ,
             'uncommon': 0.09  ,
@@ -68,7 +68,7 @@ def rarity_odds(level):
             'epic': 0.001, 
             'legendary': 0
         }
-    elif level <=15:
+    elif int(level) <=15:
         return {
             'common': 1 - 0.0175 ,
             'uncommon': 0.01 ,
@@ -76,7 +76,7 @@ def rarity_odds(level):
             'epic': 0.00245,
             'legendary': 0.0005
         }
-    elif level <=20:
+    elif int(level) <=20:
         return {
             'common': 1 - 0.01,
             'uncommon': 0.01 ,
