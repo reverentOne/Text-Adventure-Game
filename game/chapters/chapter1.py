@@ -12,13 +12,19 @@ def chapter1(game_state):
 
         def __init__(self):
             pl = gs["guild_member_matrix"]
+            pln = gs["guild_party_name_matrix"]
+            party_name=[]
             gs["location"]["name"] = self._location
             gs["game_progress"]["chapter"] = 1
             #Rest of setting game state
+            for i in range(pln):
+                if pln[i] == 0:
+                     party_name.append("Empty")
+                else:
+                    party_name.append(pln[i])
             print("\nWelcome to Chapter 1: The Forest of Beginnings!")
             print("Your task is to find the ancient relic hidden deep within the forest. You are the guide master in charge of finding the right party to complete this task. Good luck!\n\n")
-            party_str = '\n'.join([f"({i+1}) {str(party)}" for i, party in enumerate(pl)])
-            party_num = int(input(f"Which party would you like to send?\n{party_str}\n"))-1
+            party_num = int(input(f"Which party would you like to send?\n{party_name}\n"))-1
 
             print("Your team got a huge temporary booster!!!")
             boosted_party = pl[party_num].copy()
