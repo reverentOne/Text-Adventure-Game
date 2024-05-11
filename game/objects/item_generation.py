@@ -119,12 +119,14 @@ def weapon_generation(item_name, level, specified_rarity=None):
     if item_config is None:
         raise ValueError(f"Item '{item_name}' not found in config file")
     
-    # Create the item    
+    # Create the item   
+    item_name = 'item_name' 
     item_type = 'weapon'
     if specified_rarity is not None:
         chosen_rarity = specified_rarity
     else:
         chosen_rarity = rarity_determination(level)
+
     health = 0
     damage = random.randint(0, 10)*chosen_rarity.value* item_config["physical_damage_modifier"]
     elemental_damage = random.randint(0,10)*chosen_rarity.value* item_config["elemental_damage_modifier"]
@@ -138,7 +140,7 @@ def weapon_generation(item_name, level, specified_rarity=None):
     healing = 0
     autoattack_speed = random.random()*item_config["autoattack_speed_modifier"]*chosen_rarity.value
     ability_speed = random.randint(0,10)*item_config["ability_speed_modifier"]*chosen_rarity.value
-    weapon = item_framework(item_name, chosen_rarity, health, damage, elemental_damage,
+    weapon = item_framework(item_name,item_type, chosen_rarity, health, damage, elemental_damage,
                             bleed_threshold_damage, resist, elemental_resists,
                             bleed_threshold, critical_chance, critical_damage,
                             self_healing, healing, autoattack_speed, ability_speed, item_type)
@@ -154,6 +156,7 @@ def armor_generation(item_name, level):
         raise ValueError(f"Item '{item_name}' not found in config file")
     
     # Create the item    
+    item_name = 'item_name'
     item_type = 'armor'
     chosen_rarity = rarity_determination(level)
     health = random.randint(0, 10)*chosen_rarity.value* item_config["hp_modifier"]
@@ -169,7 +172,7 @@ def armor_generation(item_name, level):
     healing = random.randint(0,10)*chosen_rarity.value* item_config["self_healing_modifier"]
     autoattack_speed = 0
     ability_speed = 0
-    armor = item_framework("item_name", chosen_rarity, health, damage, elemental_damage,
+    armor = item_framework(item_name,item_type, chosen_rarity, health, damage, elemental_damage,
                             bleed_threshold_damage, resist, elemental_resists,
                             bleed_threshold, critical_chance, critical_damage,
                             self_healing, healing, autoattack_speed, ability_speed, item_type)
@@ -185,6 +188,7 @@ def accessory_generation(item_name, level):
         raise ValueError(f"Item '{item_name}' not found in config file")
     
     # Create the item    
+    item_name = 'item_name'
     item_type = 'accessory'
     chosen_rarity = rarity_determination(level)
     health = random.randint(0, 10)*chosen_rarity.value* item_config["hp_modifier"]
@@ -200,11 +204,9 @@ def accessory_generation(item_name, level):
     healing = random.randint(0,10)*chosen_rarity.value* item_config["self_healing_modifier"]
     autoattack_speed = random.random()*item_config["autoattack_speed_modifier"]
     ability_speed = random.randint(0,10)*item_config["ability_speed_modifier"]
-    accessory = item_framework("item_name", chosen_rarity, health, damage, elemental_damage,
+    accessory = item_framework(item_name, chosen_rarity, health, damage, elemental_damage,
                             bleed_threshold_damage, resist, elemental_resists,
                             bleed_threshold, critical_chance, critical_damage,
                             self_healing, healing, autoattack_speed, ability_speed, item_type)
     return accessory
 
-print(weapon_generation("Axe",25))
-print(weapon_generation("Axe",25, rarity.rare))

@@ -13,10 +13,11 @@ def load_game():
     return game_state
 def create_initial_game_state():
     # Define the initial game state here
+    guild_size = 5
     return {
-        'guild_size': 5,
-        'guild_member_matrix': numpy.zeros((5, 4), dtype=object),
-        'guild_party_name_matrix': numpy.zeros((5, 1), dtype=object),
+        'guild_size': guild_size,
+        'guild_member_matrix': numpy.zeros((guild_size, 4), dtype=object),
+        'guild_party_name_matrix': numpy.zeros((guild_size, 1), dtype=object),
         'location': {
             'name': "",
             'description': "",

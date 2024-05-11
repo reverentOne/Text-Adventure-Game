@@ -1,7 +1,7 @@
 import time, random, json, threading
 from combat import combat_game as c
 from objects.item_generation import weapon_generation, armor_generation, accessory_generation
-
+from utils.guild_manager import GuildManager, PartyManager, ItemManager
 
 class IdleGameplay:
     def __init__(self, game_state):
@@ -27,7 +27,8 @@ class IdleGameplay:
 
         # Return the adventure thread
         return adventure_thread
-
+    
+   
     def calculate_adventure_duration(self, time_counter):
         
         return time_counter / 1440 #edit later
@@ -43,19 +44,15 @@ class IdleGameplay:
 
         # Calculate the rewards
         rewards = self.calculate_rewards(party, floor_reached)
-
+        gold_reward, loot_reward = rewards
         # Add the rewards to the game state
-        self.game_state['loot']['gold'] += rewards['gold']
-        for item in rewards['loot']:
-            for a in range(5):
-                for b in range(5):
-                    if self.game_state['loot']['inventory'][a][b] == 0:
-                        self.game_state['loot']['inventory'][a][b] = item
-                        break
+        self.game_state['loot']['gold'] += gold_reward
+        for item in loot_reward:
+            ItemManager.add_item_to_inventory(self, item)
 
 
         # Print a message that the party has returned
-        print(f"\n(Alert) {'guild_party_name_matrix'[party_num]} has returned from their adventure after {int(self.calculate_adventure_duration(time_counter))} days. They reached floor {floor_reached} and collected {rewards['gold']} gold and {len(rewards['loot'])} item(s).")
+        print(f"\n(Alert) {'guild_party_name_matrix'[party_num]} has returned from their adventure after {int(self.calculate_adventure_duration(time_counter))} days. They reached floor {floor_reached} and collected {gold_reward} gold and {len(loot_reward)} item(s).")
 
     def calculate_rewards(self, party, floor_reached):
         base_gold_reward = 10
@@ -91,7 +88,7 @@ class IdleGameplay:
                 for character in party:
                     loot_reward.append(accessory_generation(item['item_name'], character.level))
 
-        return {"gold": gold_reward, "loot": loot_reward}
+        return (gold_reward,loot_reward)
 
     def check_adventures(self):
         # Print the remaining time for each adventure
@@ -113,3 +110,86 @@ class IdleGameplay:
         # Set the reduce_duration flag and the reduce_amount
         self.reduce_duration = True
         self.reduce_amount = amount
+
+    def manager(self):
+        while True:
+            choice1 = input("1. Manage guild \n2. Manage party \n3. Manage Inventory \nWhat would you like to do? ")
+            if choice1 == '1':
+                choice2=input("1. View party stats \n 2. Move party member \n 3.Remove party member \n What would you like to do? ")
+                if choice2 == '1':
+                    GuildManager.view_guild(self)
+                    break
+                elif choice2 == '2':
+                    for a in range(int(self.game_state['guild_size'])):
+                        for b in range(4):
+                            print({(2*a+1)+b})
+                            print(self.game_state['guild_member_matrix'][a][b].name)
+                    choice2a = input("Which party member would you like to move? ")
+                    a=int(choice2a)%4
+                    GuildManager.move_party_member(self, self.game_state['guild_member_matrix'][a][choice2a-1-3*a])
+                    break
+                elif choice2 == '3':
+                    for a in range(int(self.game_state['guild_size'])):
+                        for b in range(4):
+                            print({(2*a+1)+b})
+                            print(self.game_state['guild_member_matrix'][a][b].name)
+                    choice2b = input("Which party member would you like to remove? ")
+                    a=int(choice2b)%4
+                    GuildManager.remove_party_member(self, self.game_state['guild_member_matrix'][a][choice2b-1-3*a])
+                    break
+                else:
+                    print("Invalid input.")
+            elif choice1 == '2':
+                choice3 = input("1. Level up party member \n2. Equip item\n 3. Unequip item \n4.View party stats \nWhat would you like to do? ")
+                if choice3 == '1':
+                    for a in range(int(self.game_state['guild_size'])):
+                        for b in range(4):
+                            print({(2*a+1)+b})
+                            print(self.game_state['guild_member_matrix'][a][b].name)
+                    choice3a = input("Which party member would you like to level up? ")
+                    a=int(choice3a)%4
+                    PartyManager.level_up(self, self.game_state['guild_member_matrix'][a][choice3a-1-3*a])
+                    break
+                elif choice3 == '2':
+                    for a in range(int(self.game_state['guild_size'])):
+                        for b in range(4):
+                            print({(2*a+1)+b})
+                            print(self.game_state['guild_member_matrix'][a][b].name)
+                    adventurer = input("Which party member would you like to equip? ")
+                    a=int(adventurer)%4
+                    for i in range(5):
+                        for j in range(5):
+                            print({(2*a+1)+b})
+                            print(self.game_state['loot']['inventory'][i][j].name)
+                    item = input("Which item would you like to equip? ")
+                    i = int(item)%5
+                    PartyManager.equip_item(self, self.game_state['guild_member_matrix'][a][adventurer-1-3*a], self.game_state['loot']['inventory'][i][item-1-4*i])
+                    break
+                elif choice3 == '3':
+                    for a in range(int(self.game_state['guild_size'])):
+                        for b in range(4):
+                            print({(2*a+1)+b})
+                            print(self.game_state['guild_member_matrix'][a][b].name)
+                    adventurer = input("Which party member would you like to unequip? ")
+                    a=int(adventurer)%4
+                    for i in range(5):
+                        for j in range(5):
+                            print({(2*a+1)+b})
+                            print(self.game_state['loot']['inventory'][i][j].name)
+                    item = input("Which item would you like to equip? ")
+                    i = int(item)%5
+                    PartyManager.unequip_item(self, self.game_state['guild_member_matrix'][a][adventurer-1-3*a], self.game_state['loot']['inventory'][i][item-1-4*i])
+                    break
+                elif choice3 == '4':
+                    PartyManager.view_party_stats(self)
+                    break
+            elif choice1 == '3':
+                choice4 = input("1. View inventory\nWhat would you like to do? ")
+                if choice4 == '1':
+                    ItemManager.view_items(self)
+                    break
+                else:
+                    print("Invalid input.")
+            else:
+                print("Invalid input.")
+    

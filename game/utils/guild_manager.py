@@ -6,6 +6,11 @@ from objects.adventurer_generation_2 import character_framework
 class GuildManager:
     def __init__(self, game_state):
         self.game_state = game_state
+    def view_guild(self):
+        for i in range(int(self.game_state['guild_size'])):
+            print(self.game_state['guild_party_name_matrix'][i])
+            for j in range(4):
+                print(self.game_state['guild_member_matrix'][i][j])
     def guild_members(self,party_array,name): #adds a party to the guild
         for i in range(int(self.game_state['guild_size'])):
             if numpy.all(self.game_state['guild_member_matrix'][i] == 0):
@@ -50,6 +55,7 @@ class GuildManager:
                     self.game_state['guild_member_matrix'][a][b] = 0
                     return True
 
+   
 class PartyManager:
     def __init__(self, game_state):
         self.game_state = game_state
@@ -103,26 +109,24 @@ class ItemManager:
         # Implement selling an item
         pass
     def add_item_to_inventory(self,item): # adds an item to the inventory
+        added = False
         for a in range(5):
+            if added == True:
+                break
             for b in range(5):
                 if self.game_state['loot']['inventory'][a][b] == 0:
                     self.game_state['loot']['inventory'][a][b] = item
+                    added = True
                     return True
         else:
             print("Inventory is full.")
+
     def view_items(self):
         for a in range(5):
             for b in range(5):
                 object = self.game_state['loot']['inventory'][a][b]
                 if object != 0:
-                    if object.item_type == "weapon":
-                        print(f"{object} (Weapon) ")
-                    elif object.item_type == "armor":
-                        print(f"{object} (Armor) ")
-                    elif object.item_type == "accessory":
-                        print(f"{object} (Accessory) ")
-                    else:
-                        print("Empty")
+                    print(object)
                 else:
                     print("Empty")
 class TradeManager:
