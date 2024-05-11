@@ -29,7 +29,12 @@ if __name__ == '__main__':
     if numpy.all(gs['guild_party_name_matrix'][0]==0):
         draft_party(gs)
         gs=chapter1.chapter1(gs)
-    print(gs['guild_party_name_matrix'])
-    gs = chapter1.chapter1(gs)
+    else:
+        print("\nWelcome back!")
+        print("Here are your current parties:")
+        for i in range(int(gs['guild_size'])):
+            for j in range(1):
+                print(gs['guild_party_name_matrix'][i][j])
+        gs = chapter1.chapter1(gs)
     sl.exit_game(gs)
     

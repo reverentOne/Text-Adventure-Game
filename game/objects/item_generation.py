@@ -19,13 +19,11 @@ class item_framework:
 
     ItemType = ['weapon', 'armor', 'accessory']
     
-    def __init__(self,item_name,chosen_rarity, health, damage,elemental_damage,bleed_threshold_damage, resist, elemental_resists,bleed_threshold,
-                 critical_chance, critical_damage, self_healing, healing,autoattack_speed,ability_speed, item_type):
-        item_type = ItemType(item_type)
-        if item_type not in ItemType:
-            raise ValueError(f"Invalid item item_type: {item_type}")
+    def __init__(self,item_name,chosen_rarity,item_type, health, damage,elemental_damage,bleed_threshold_damage, resist, elemental_resists,bleed_threshold,
+                 critical_chance, critical_damage, self_healing, healing,autoattack_speed,ability_speed):
         self.name = item_name
         self.rarity = chosen_rarity
+        self.item_type = item_type
         self.health = health
         self.damage = damage  
         self.elemental_damage = elemental_damage 
@@ -39,14 +37,13 @@ class item_framework:
         self.healing = healing
         self.autoattack_speed = autoattack_speed
         self.ability_speed = ability_speed
-        self.item_type = item_type  
         self.item_matrix = numpy.array([[self.health, self.damage, self.elemental_damage],
                                         [self.bleed_threshold_damage, self.resist, self.elemental_resists],
                                         [self.bleed_threshold, self.critical_chance, self.critical_damage],
                                         [self.self_healing, self.healing, self.autoattack_speed],
                                         [self.ability_speed,0,0]]) # created the item matrix, i don't know if this should be here or in the functions
     def __str__(self):
-        return f"{self.name} is a {self.rarity.name} item with {self.health} health, {self.damage} damage, {self.elemental_damage} elemental damage, {self.bleed_threshold_damage} bleed threshold damage, {self.resist} resist, {self.elemental_resists} elemental resists, {self.bleed_threshold} bleed threshold, {self.critical_chance} critical chance, {self.critical_damage} critical damage, {self.self_healing} self healing, {self.healing} healing, {self.autoattack_speed} autoattack speed, and {self.ability_speed} ability speed."
+        return f"{self.name}\n{self.rarity}\n{self.item_type}\n{self.health} health\n{self.damage} damage\n{self.elemental_damage} elemental damage\n{self.bleed_threshold_damage} bleed threshold damage\n{self.resist} resist\n{self.elemental_resists} elemental resists\n{self.bleed_threshold} bleed threshold\n{self.critical_chance} critical chance\n{self.critical_damage} critical damage\n{self.self_healing} self healing\n{self.healing} healing\n{self.autoattack_speed} autoattack speed\n{self.ability_speed} ability speed\n"
     def __eq__(self, other):
         if isinstance(other, item_framework):
             return self.name == other.name and self.item_type == other.item_type and self.rarity == other.rarity
@@ -97,19 +94,19 @@ def rarity_determination(level):
     odds = rarity_odds(level)
     rarity_chance = random.uniform(0,1)
     if rarity_chance < odds['common']:
-        chosen_rarity = rarity.common
+        chosen_rarity = rarity.common, 'common'
     elif rarity_chance < odds['common'] + odds['uncommon']:
-        chosen_rarity = rarity.uncommon
+        chosen_rarity = rarity.uncommon, 'uncommon'
     elif rarity_chance < odds['common'] + odds['uncommon'] + odds['rare']:
-        chosen_rarity = rarity.rare
+        chosen_rarity = rarity.rare, 'rare'
     elif rarity_chance < odds['common'] + odds['uncommon'] + odds['rare'] + odds['epic']:
-        chosen_rarity = rarity.epic
+        chosen_rarity = rarity.epic, 'epic'
     elif rarity_chance < odds['common'] + odds['uncommon'] + odds['rare'] + odds['epic'] + odds['legendary']: 
-        chosen_rarity = rarity.legendary
+        chosen_rarity = rarity.legendary, 'legendary'
     return chosen_rarity
 
 
-def weapon_generation(item_name, level, specified_rarity=None):
+def weapon_generation(item_name, level):
     # Load the config file
     with open('assets\\data\\config.json') as f:
         config = json.load(f)
@@ -120,13 +117,9 @@ def weapon_generation(item_name, level, specified_rarity=None):
         raise ValueError(f"Item '{item_name}' not found in config file")
     
     # Create the item   
-    item_name = 'item_name' 
+    item_name = item_config['item_name'] 
     item_type = 'weapon'
-    if specified_rarity is not None:
-        chosen_rarity = specified_rarity
-    else:
-        chosen_rarity = rarity_determination(level)
-
+    chosen_rarity, actual_rarity = rarity_determination(level)
     health = 0
     damage = random.randint(0, 10)*chosen_rarity.value* item_config["physical_damage_modifier"]
     elemental_damage = random.randint(0,10)*chosen_rarity.value* item_config["elemental_damage_modifier"]
@@ -134,16 +127,16 @@ def weapon_generation(item_name, level, specified_rarity=None):
     resist = 0
     elemental_resists = 0
     bleed_threshold = 0
-    critical_chance = random.uniform(0,.02)*item_config["crit_chance_modifier"]*chosen_rarity.value
-    critical_damage = random.uniform(0,.02)*item_config["crit_damage_modifier"]*chosen_rarity.value
+    critical_chance = round(random.uniform(0,.02)*item_config["crit_chance_modifier"]*chosen_rarity.value,2)
+    critical_damage = round(random.uniform(0,.02)*item_config["crit_damage_modifier"]*chosen_rarity.value,2)
     self_healing = 0
     healing = 0
-    autoattack_speed = random.random()*item_config["autoattack_speed_modifier"]*chosen_rarity.value
+    autoattack_speed = round(random.random()*item_config["autoattack_speed_modifier"]*chosen_rarity.value,2)
     ability_speed = random.randint(0,10)*item_config["ability_speed_modifier"]*chosen_rarity.value
-    weapon = item_framework(item_name,item_type, chosen_rarity, health, damage, elemental_damage,
+    weapon = item_framework(item_name, item_type, actual_rarity, health, damage, elemental_damage,
                             bleed_threshold_damage, resist, elemental_resists,
                             bleed_threshold, critical_chance, critical_damage,
-                            self_healing, healing, autoattack_speed, ability_speed, item_type)
+                            self_healing, healing, autoattack_speed, ability_speed)
     return weapon
 def armor_generation(item_name, level):
     # Load the config file
@@ -156,9 +149,9 @@ def armor_generation(item_name, level):
         raise ValueError(f"Item '{item_name}' not found in config file")
     
     # Create the item    
-    item_name = 'item_name'
+    item_name = item_config['item_name']
     item_type = 'armor'
-    chosen_rarity = rarity_determination(level)
+    chosen_rarity, actual_rarity = rarity_determination(level)
     health = random.randint(0, 10)*chosen_rarity.value* item_config["hp_modifier"]
     damage = 0
     elemental_damage = 0
@@ -172,10 +165,10 @@ def armor_generation(item_name, level):
     healing = random.randint(0,10)*chosen_rarity.value* item_config["self_healing_modifier"]
     autoattack_speed = 0
     ability_speed = 0
-    armor = item_framework(item_name,item_type, chosen_rarity, health, damage, elemental_damage,
+    armor = item_framework(item_name,item_type, actual_rarity, health, damage, elemental_damage,
                             bleed_threshold_damage, resist, elemental_resists,
                             bleed_threshold, critical_chance, critical_damage,
-                            self_healing, healing, autoattack_speed, ability_speed, item_type)
+                            self_healing, healing, autoattack_speed, ability_speed)
     return armor
 def accessory_generation(item_name, level):
     # Load the config file
@@ -188,9 +181,9 @@ def accessory_generation(item_name, level):
         raise ValueError(f"Item '{item_name}' not found in config file")
     
     # Create the item    
-    item_name = 'item_name'
+    item_name = item_config["item_name"]
     item_type = 'accessory'
-    chosen_rarity = rarity_determination(level)
+    chosen_rarity, actual_rarity = rarity_determination(level)
     health = random.randint(0, 10)*chosen_rarity.value* item_config["hp_modifier"]
     damage = random.randint(0, 10)*chosen_rarity.value* item_config["physical_damage_modifier"]
     elemental_damage = random.randint(0,10)*chosen_rarity.value* item_config["elemental_damage_modifier"]
@@ -198,15 +191,15 @@ def accessory_generation(item_name, level):
     resist = random.randint(0,10)*chosen_rarity.value* item_config["physical_resistance_modifier"]
     elemental_resists = random.randint(0,10)*chosen_rarity.value* item_config["elemental_resistance_modifier"]
     bleed_threshold =  random.randint(0,10)*chosen_rarity.value* item_config["bleed_threshold_modifier"]
-    critical_chance = random.uniform(0,.02)*item_config["crit_chance_modifier"]
-    critical_damage = random.uniform(0,.02)*item_config["crit_damage_modifier"]
+    critical_chance = round(random.uniform(0,.02)*item_config["crit_chance_modifier"],2)
+    critical_damage = round(random.uniform(0,.02)*item_config["crit_damage_modifier"],2)
     self_healing = random.randint(0,10)*chosen_rarity.value* item_config["ally_healing_modifier"]
     healing = random.randint(0,10)*chosen_rarity.value* item_config["self_healing_modifier"]
-    autoattack_speed = random.random()*item_config["autoattack_speed_modifier"]
+    autoattack_speed = round(random.random()*item_config["autoattack_speed_modifier"],2)
     ability_speed = random.randint(0,10)*item_config["ability_speed_modifier"]
-    accessory = item_framework(item_name, chosen_rarity, health, damage, elemental_damage,
+    accessory = item_framework(item_name,item_type, actual_rarity, health, damage, elemental_damage,
                             bleed_threshold_damage, resist, elemental_resists,
                             bleed_threshold, critical_chance, critical_damage,
-                            self_healing, healing, autoattack_speed, ability_speed, item_type)
+                            self_healing, healing, autoattack_speed, ability_speed)
     return accessory
 

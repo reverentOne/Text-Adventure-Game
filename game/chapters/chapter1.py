@@ -31,7 +31,7 @@ def chapter1(game_state):
             party_num = int(input(f"Which party would you like to send?\n"))-1
 
             print("Your team got a huge temporary booster!!!")
-            boosted_party = pl[party_num].copy()
+            boosted_party = numpy.copy(pl[party_num])
             for adventurer in boosted_party:
                 adventurer.health += 10000
                 adventurer.base_physical_damage += 1000

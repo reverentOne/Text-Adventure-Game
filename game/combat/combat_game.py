@@ -11,7 +11,7 @@ def combat_loop(adventurers_list, flr = 0):
     if flr == 0: time_counter = 0
     floor = flr
     enemy_party = enemy_list(floor).tolist()
-    party = adventurers_list
+    party = numpy.copy(adventurers_list)
     combat_queue = queue.PriorityQueue()
     weakest_adventurer = min(party, key=lambda x: x.health)
     strongest_adventurer = max(party, key=lambda x: x.health)
@@ -42,9 +42,9 @@ def combat_loop(adventurers_list, flr = 0):
                     chance = random.random()
                     critical = character.critical_chance
                     if chance <= critical:
-                        damage = character.base_physical_damage*(1+character.critical_damage)
+                        damage = round(character.base_physical_damage*(1+character.critical_damage),0)
                     else:
-                        damage = character.base_physical_damage
+                        damage = round(character.base_physical_damage,0)
                     #deal auto attack damage
                     enemy_party[0].health -= max(1,damage-enemy_party[0].physical_resistance)
                     #deal ability damage if available
@@ -56,7 +56,7 @@ def combat_loop(adventurers_list, flr = 0):
                         bleed -= character.bleed_threshold_damage
                         ability_counter = character.ability_speed
                         if bleed <= 0:
-                            enemy_party[0].health -= enemy_party[0].health/10
+                            enemy_party[0].health -= round(enemy_party[0].health/10,0)
                             bleed = enemy_party[0].bleed_threshold
                     #Update dictionary
                     ability_counters[character] = ability_counter
@@ -75,9 +75,9 @@ def combat_loop(adventurers_list, flr = 0):
                     chance = random.random()
                     critical = character.critical_chance
                     if chance <= critical:
-                        damage = character.base_physical_damage*(1+character.critical_damage)
+                        damage = round(character.base_physical_damage*(1+character.critical_damage),0)
                     else:
-                        damage = character.base_physical_damage
+                        damage = round(character.base_physical_damage,0)
                     strongest_adventurer.health -= max(1, damage-strongest_adventurer.physical_resistance)
                     if ability_counter <= 0:
                         strongest_adventurer.health -= max(1, character.base_elemental_damage-strongest_adventurer.elemental_resists)
@@ -87,7 +87,7 @@ def combat_loop(adventurers_list, flr = 0):
                         bleed = strongest_adventurer.bleed_threshold
                         bleed -= character.bleed_threshold_damage
                         if bleed <= 0:
-                            strongest_adventurer.health -= strongest_adventurer.health/10
+                            strongest_adventurer.health -= round(strongest_adventurer.health/10,0)
                             bleed = strongest_adventurer.bleed_threshold
                     ability_counters[character] = ability_counter
                     if strongest_adventurer.health <= 0:

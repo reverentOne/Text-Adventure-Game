@@ -80,10 +80,10 @@ class IdleGameplay:
             #generate item
             if item_type == 'weapon':
                 for character in party:
-                    loot_reward.append(accessory_generation(item['item_name'], character.level))
+                    loot_reward.append(weapon_generation(item['item_name'], character.level))
             elif item_type == 'armor':
                 for character in party:
-                    loot_reward.append(accessory_generation(item['item_name'], character.level))
+                    loot_reward.append(armor_generation(item['item_name'], character.level))
             elif item_type == 'accessory':
                 for character in party:
                     loot_reward.append(accessory_generation(item['item_name'], character.level))
@@ -113,16 +113,16 @@ class IdleGameplay:
 
     def manager(self):
         while True:
-            choice1 = input("1. Manage guild \n2. Manage party \n3. Manage Inventory \nWhat would you like to do? ")
+            choice1 = input("\n1. Manage guild\n2. Manage party\n3. Manage Inventory\nWhat would you like to do? ")
             if choice1 == '1':
-                choice2=input("1. View party stats \n 2. Move party member \n 3.Remove party member \n What would you like to do? ")
+                choice2=input("\n1. View Guild stats\n2. Move party member\n3.Remove party member\nWhat would you like to do? ")
                 if choice2 == '1':
                     GuildManager.view_guild(self)
                     break
                 elif choice2 == '2':
                     for a in range(int(self.game_state['guild_size'])):
                         for b in range(4):
-                            print({(2*a+1)+b})
+                            print({((int(self.game_state['guild_size']))*a+1)+b})
                             print(self.game_state['guild_member_matrix'][a][b].name)
                     choice2a = input("Which party member would you like to move? ")
                     a=int(choice2a)%4
@@ -131,7 +131,7 @@ class IdleGameplay:
                 elif choice2 == '3':
                     for a in range(int(self.game_state['guild_size'])):
                         for b in range(4):
-                            print({(2*a+1)+b})
+                            print({((int(self.game_state['guild_size']))*a+1)+b})
                             print(self.game_state['guild_member_matrix'][a][b].name)
                     choice2b = input("Which party member would you like to remove? ")
                     a=int(choice2b)%4
@@ -140,11 +140,11 @@ class IdleGameplay:
                 else:
                     print("Invalid input.")
             elif choice1 == '2':
-                choice3 = input("1. Level up party member \n2. Equip item\n 3. Unequip item \n4.View party stats \nWhat would you like to do? ")
+                choice3 = input("\n1. Level up party member\n2. Equip item\n3. Unequip item\n4.View party stats\nWhat would you like to do? ")
                 if choice3 == '1':
                     for a in range(int(self.game_state['guild_size'])):
                         for b in range(4):
-                            print({(2*a+1)+b})
+                            print({((int(self.game_state['guild_size']))*a+1)+b})
                             print(self.game_state['guild_member_matrix'][a][b].name)
                     choice3a = input("Which party member would you like to level up? ")
                     a=int(choice3a)%4
@@ -153,13 +153,13 @@ class IdleGameplay:
                 elif choice3 == '2':
                     for a in range(int(self.game_state['guild_size'])):
                         for b in range(4):
-                            print({(2*a+1)+b})
+                            print({((int(self.game_state['guild_size']))*a+1)+b})
                             print(self.game_state['guild_member_matrix'][a][b].name)
                     adventurer = input("Which party member would you like to equip? ")
                     a=int(adventurer)%4
                     for i in range(5):
                         for j in range(5):
-                            print({(2*a+1)+b})
+                            print({(5*a+1)+b})
                             print(self.game_state['loot']['inventory'][i][j].name)
                     item = input("Which item would you like to equip? ")
                     i = int(item)%5
@@ -168,15 +168,15 @@ class IdleGameplay:
                 elif choice3 == '3':
                     for a in range(int(self.game_state['guild_size'])):
                         for b in range(4):
-                            print({(2*a+1)+b})
+                            print({((int(self.game_state['guild_size']))*a+1)+b})
                             print(self.game_state['guild_member_matrix'][a][b].name)
                     adventurer = input("Which party member would you like to unequip? ")
                     a=int(adventurer)%4
                     for i in range(5):
                         for j in range(5):
-                            print({(2*a+1)+b})
+                            print({(5*a+1)+b})
                             print(self.game_state['loot']['inventory'][i][j].name)
-                    item = input("Which item would you like to equip? ")
+                    item = input("Which item would you like to unequip? ")
                     i = int(item)%5
                     PartyManager.unequip_item(self, self.game_state['guild_member_matrix'][a][adventurer-1-3*a], self.game_state['loot']['inventory'][i][item-1-4*i])
                     break
@@ -184,7 +184,7 @@ class IdleGameplay:
                     PartyManager.view_party_stats(self)
                     break
             elif choice1 == '3':
-                choice4 = input("1. View inventory\nWhat would you like to do? ")
+                choice4 = input("\n1. View inventory\nWhat would you like to do? ")
                 if choice4 == '1':
                     ItemManager.view_items(self)
                     break

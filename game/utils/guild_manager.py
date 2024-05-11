@@ -108,7 +108,7 @@ class ItemManager:
     def sell_item(self, item):
         # Implement selling an item
         pass
-    def add_item_to_inventory(self,item): # adds an item to the inventory
+    def add_item_to_inventory(self, item): # adds an item to the inventory
         added = False
         for a in range(5):
             if added == True:
@@ -118,17 +118,36 @@ class ItemManager:
                     self.game_state['loot']['inventory'][a][b] = item
                     added = True
                     return True
-        else:
+            else:
+                continue
+        """else: #This doesn't work with how the adventure is set up. The thread finishes before the user can replace an item
             print("Inventory is full.")
+            replacement = input("Would you like to replace an item? (Y/N) ")
+            if replacement == 'Y' or replacement == 'y':
+                for a in range(5):
+                    for b in range(5):
+                        print(4*a+b+1)
+                        print(self.game_state['loot']['inventory'][a][b])
+                        print("\n")
+                item_to_replace = input("Which item would you like to replace? ")
+                i = int(item_to_replace)%5
+                self.game_state['loot']['inventory'][i][item_to_replace-1-4*i] = item
+                return True
+            else:
+                return False"""
 
     def view_items(self):
         for a in range(5):
             for b in range(5):
+                print(5*a+b+1)
                 object = self.game_state['loot']['inventory'][a][b]
                 if object != 0:
                     print(object)
+                    print("\n")
                 else:
                     print("Empty")
+                    print("\n")
+
 class TradeManager:
     def __init__(self, game_state):
         self.game_state = game_state
