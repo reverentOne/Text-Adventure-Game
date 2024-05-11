@@ -2,13 +2,14 @@ import time, random, json, threading
 from combat import combat_game as c
 from objects.item_generation import weapon_generation, armor_generation, accessory_generation
 
+
 class IdleGameplay:
     def __init__(self, game_state):
         self.game_state = game_state
         self.adventures = []
         self.reduce_duration = False
 
-    def start_adventure(self, party):
+    def start_adventure(self, party,party_num):
         floor_reached, time_counter = c.combat_loop(party)
         duration = self.calculate_adventure_duration(time_counter)
 
@@ -16,7 +17,7 @@ class IdleGameplay:
         stop_event = threading.Event()
 
         # Create a new thread for the adventure
-        adventure_thread = threading.Thread(target=self.adventure, args=(party, duration, floor_reached, stop_event, time_counter))
+        adventure_thread = threading.Thread(target=self.adventure, args=(party,party_num, duration, floor_reached, stop_event, time_counter))
 
         # Add the thread and the end time to the adventures list
         self.adventures.append((adventure_thread, time.time() + duration))
@@ -31,7 +32,7 @@ class IdleGameplay:
         
         return time_counter / 1440 #edit later
 
-    def adventure(self, party, duration, floor_reached, stop_event, time_counter):
+    def adventure(self, party,party_num, duration, floor_reached, stop_event, time_counter):
         # Sleep for the duration of the adventure
         while not stop_event.is_set() and duration > 0:
             #time.sleep(1)
@@ -45,10 +46,16 @@ class IdleGameplay:
 
         # Add the rewards to the game state
         self.game_state['loot']['gold'] += rewards['gold']
-        self.game_state['loot']['items'].append(rewards['loot'])
+        for item in rewards['loot']:
+            for a in range(5):
+                for b in range(5):
+                    if self.game_state['loot']['inventory'][a][b] == 0:
+                        self.game_state['loot']['inventory'][a][b] = item
+                        break
+
 
         # Print a message that the party has returned
-        print(f"\n(Alert) {party.name} has returned from their adventure after {int(self.calculate_adventure_duration(time_counter))} days. They reached floor {floor_reached} and collected {rewards['gold']} gold and {len(rewards['loot'])} item(s).")
+        print(f"\n(Alert) {'guild_party_name_matrix'[party_num]} has returned from their adventure after {int(self.calculate_adventure_duration(time_counter))} days. They reached floor {floor_reached} and collected {rewards['gold']} gold and {len(rewards['loot'])} item(s).")
 
     def calculate_rewards(self, party, floor_reached):
         base_gold_reward = 10
@@ -76,13 +83,13 @@ class IdleGameplay:
             #generate item
             if item_type == 'weapon':
                 for character in party:
-                    loot_reward.append(accessory_generation(character.level, item['name']))
+                    loot_reward.append(accessory_generation(item['item_name'], character.level))
             elif item_type == 'armor':
                 for character in party:
-                    loot_reward.append(accessory_generation(character.level, item['name']))
+                    loot_reward.append(accessory_generation(item['item_name'], character.level))
             elif item_type == 'accessory':
                 for character in party:
-                    loot_reward.append(accessory_generation(character.level, item['name']))
+                    loot_reward.append(accessory_generation(item['item_name'], character.level))
 
         return {"gold": gold_reward, "loot": loot_reward}
 

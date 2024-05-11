@@ -115,7 +115,7 @@ def weapon_generation(item_name, level, specified_rarity=None):
         config = json.load(f)
 
     # Find the item in the config file
-    item_config = next((item for item in config if item["name"] == item_name), None)
+    item_config = next((item for item in config if item["item_name"] == item_name), None)
     if item_config is None:
         raise ValueError(f"Item '{item_name}' not found in config file")
     
@@ -149,7 +149,7 @@ def armor_generation(item_name, level):
         config = json.load(f)
 
     # Find the item in the config file
-    item_config = next((item for item in config if item["name"] == item_name), None)
+    item_config = next((item for item in config if item["item_name"] == item_name), None)
     if item_config is None:
         raise ValueError(f"Item '{item_name}' not found in config file")
     
@@ -180,7 +180,7 @@ def accessory_generation(item_name, level):
         config = json.load(f)
 
     # Find the item in the config file
-    item_config = next((item for item in config if item["name"] == item_name), None)
+    item_config = next((item for item in config if item["item_name"] == item_name), None)
     if item_config is None:
         raise ValueError(f"Item '{item_name}' not found in config file")
     

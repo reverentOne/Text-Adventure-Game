@@ -1,6 +1,6 @@
 [
     { 
-      "name": "Short Sword",
+      "item_name": "Short Sword",
       "type": "weapon",
       "physical_damage_modifier": 1,
       "elemental_damage_modifier": 0,
@@ -17,7 +17,7 @@
       "ability_speed_modifier": 0
     },
     { 
-      "name": "Long Sword",
+      "item_name": "Long Sword",
       "type": "weapon",
       "physical_damage_modifier": 1.5,
       "elemental_damage_modifier": 0,
@@ -34,7 +34,7 @@
       "ability_speed_modifier": 0
     },
     { 
-      "name": "Axe",
+      "item_name": "Axe",
       "type": "weapon",
       "physical_damage_modifier": 2,
       "elemental_damage_modifier": 0,
@@ -51,7 +51,7 @@
       "ability_speed_modifier": 0
     },
     { 
-      "name": "Bow",
+      "item_name": "Bow",
       "type": "weapon",
       "physical_damage_modifier": 1.2,
       "elemental_damage_modifier": 0.5,
@@ -68,7 +68,7 @@
       "ability_speed_modifier": 0
     },
     { 
-      "name": "Staff",
+      "item_name": "Staff",
       "type": "weapon",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 1.5,
@@ -85,7 +85,7 @@
       "ability_speed_modifier": 0
     },
     { 
-      "name": "Dagger",
+      "item_name": "Dagger",
       "type": "weapon",
       "physical_damage_modifier": 0.8,
       "elemental_damage_modifier": 0.8,
@@ -102,7 +102,7 @@
       "ability_speed_modifier": 0
     },
     { 
-      "name": "Hammer",
+      "item_name": "Hammer",
       "type": "weapon",
       "physical_damage_modifier": 2.5,
       "elemental_damage_modifier": 0,
@@ -119,7 +119,7 @@
       "ability_speed_modifier": 0
     },
     { 
-      "name": "Crossbow",
+      "item_name": "Crossbow",
       "type": "weapon",
       "physical_damage_modifier": 1.8,
       "elemental_damage_modifier": 0,
@@ -136,7 +136,7 @@
       "ability_speed_modifier": 0
     },
     { 
-      "name": "Greatsword",
+      "item_name": "Greatsword",
       "type": "weapon",
       "physical_damage_modifier": 3,
       "elemental_damage_modifier": 0,
@@ -153,7 +153,7 @@
       "ability_speed_modifier": 0
     },
     { 
-      "name": "Wand",
+      "item_name": "Wand",
       "type": "weapon",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 2,
@@ -170,7 +170,7 @@
       "ability_speed_modifier": 0
     },
     { 
-      "name": "Spear",
+      "item_name": "Spear",
       "type": "weapon",
       "physical_damage_modifier": 1.5,
       "elemental_damage_modifier": 0.5,
@@ -187,7 +187,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "greatspear",
+      "item_name": "greatspear",
       "type": "weapon",
       "physical_damage_modifier": 2.5,
       "elemental_damage_modifier": 0,
@@ -204,7 +204,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name":"elemental spear",
+      "item_name":"elemental spear",
       "type":"weapon",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 2.5,
@@ -221,7 +221,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name":"elemental greatspear",
+      "item_name":"elemental greatspear",
       "type":"weapon",
       "physical_damage_modifier": 1.5,
       "elemental_damage_modifier": 2.5,
@@ -238,7 +238,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Leather Armor",
+      "item_name": "Leather Armor",
       "type": "armor",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -255,7 +255,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Plate Armor",
+      "item_name": "Plate Armor",
       "type": "armor",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -272,7 +272,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Chainmail Armor",
+      "item_name": "Chainmail Armor",
       "type": "armor",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -289,7 +289,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Robe",
+      "item_name": "Robe",
       "type": "armor",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -306,7 +306,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Knight's Armor",
+      "item_name": "Knight's Armor",
       "type": "armor",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -323,7 +323,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Dragon Scale Armor",
+      "item_name": "Dragon Scale Armor",
       "type": "armor",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -340,7 +340,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Diamond Armor",
+      "item_name": "Diamond Armor",
       "type": "armor",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -357,7 +357,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Invictus Aegis Armor",
+      "item_name": "Invictus Aegis Armor",
       "type": "armor",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -374,7 +374,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Shield",
+      "item_name": "Shield",
       "type": "accessory",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -392,7 +392,7 @@
     },
     
     {
-      "name": "Ring of Power",
+      "item_name": "Ring of Power",
       "type": "accessory",
       "physical_damage_modifier": 1,
       "elemental_damage_modifier": 1,
@@ -409,7 +409,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Amulet of Wisdom",
+      "item_name": "Amulet of Wisdom",
       "type": "accessory",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -426,7 +426,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Necklace of Vitality",
+      "item_name": "Necklace of Vitality",
       "type": "accessory",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -443,7 +443,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Bracelet of Agility",
+      "item_name": "Bracelet of Agility",
       "type": "accessory",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -460,7 +460,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Earring of Endurance",
+      "item_name": "Earring of Endurance",
       "type": "accessory",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -477,7 +477,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Gloves of Precision",
+      "item_name": "Gloves of Precision",
       "type": "accessory",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,
@@ -494,7 +494,7 @@
       "ability_speed_modifier": 0
     },
     {
-      "name": "Ring of Regeneration",
+      "item_name": "Ring of Regeneration",
       "type": "accessory",
       "physical_damage_modifier": 0,
       "elemental_damage_modifier": 0,

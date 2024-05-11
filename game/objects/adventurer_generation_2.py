@@ -106,8 +106,8 @@ class character_framework:
     
 def character():
     rarity = character_framework.rarity_chance(character_framework)
-    level = 1
     name = random.choice(character_framework.first_names) + ' ' + random.choice(character_framework.last_names)
+    level = 1
     experience_requirements = 100*int(rarity_multiplier[rarity])*level
     experience = 0
     star_shards = 0
@@ -132,7 +132,7 @@ def character():
                                     [ability_speed,0,0]]) #makes a matrix of the characters attributes
     if character_framework.unique(character_framework) == 'unique':
         character_matrix += character_framework.nature_attributes(character_framework) #adds unique attributes if the character is unique
-    character = character_framework(level,name,experience_requirements,experience, health, damage,elemental_damage,bleed_threshold_damage, resist, elemental_resists,bleed_threshold,
+    character = character_framework(name,level,experience_requirements,experience, health, damage,elemental_damage,bleed_threshold_damage, resist, elemental_resists,bleed_threshold,
                  critical_chance, critical_damage, self_healing, healing,autoattack_speed,ability_speed)
     if experience >= experience_requirements: #level up not sure if this works or if it needs to be in another function
         level_up_points = 5
