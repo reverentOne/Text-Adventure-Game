@@ -8,9 +8,18 @@ class GuildManager:
         self.game_state = game_state
     def view_guild(self):
         for i in range(int(self.game_state['guild_size'])):
-            print(self.game_state['guild_party_name_matrix'][i])
+            if numpy.all(self.game_state['guild_member_matrix'][i] == 0):
+                print()
+                print("Empty Party")
+            else:
+                print()
+                print(self.game_state['guild_party_name_matrix'][i])
             for j in range(4):
-                print(self.game_state['guild_member_matrix'][i][j])
+                if self.game_state['guild_member_matrix'][i][j] == 0:
+                    print("Empty")
+                else:
+                    print()
+                    print(self.game_state['guild_member_matrix'][i][j])
     def guild_members(self,party_array,name): #adds a party to the guild
         for i in range(int(self.game_state['guild_size'])):
             if numpy.all(self.game_state['guild_member_matrix'][i] == 0):
@@ -20,16 +29,18 @@ class GuildManager:
             
     def move_party_member(self,character): #moves a party member to a different slot in the guild and replaces the old slot with a different party member
         for a in range(int(self.game_state['guild_size'])):
-            for b in range(int(self.game_state['guild_size'])):
+            for b in range(4):
                 if self.game_state['guild_member_matrix'][a][b] == 0: 
                     continue
                 if character == self.game_state['guild_member_matrix'][a][b]:
                     found_at = (a, b)
                     self.game_state['guild_member_matrix'][a][b] = 0
                     choice = int(input("where would you like to move this party member? "))
-                    replace = self.game_state['guild_member_matrix'][choice-1 -4*(choice%4)][choice%4]
-                    self.game_state['guild_member_matrix'][choice-1 -4*(choice%4)][choice%4] = character
+                    a = int(choice)//4
+                    replace = self.game_state['guild_member_matrix'][a][int(choice)-1-3*a]
+                    self.game_state['guild_member_matrix'][a][int(choice)-1-3*a] = character
                     self.game_state['guild_member_matrix'][found_at[0]][found_at[1]] = replace
+                    print("Done")
                     return True
                 
     def add_party_member(self,character): #adds a character to the guild

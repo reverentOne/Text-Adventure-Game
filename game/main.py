@@ -7,7 +7,7 @@ sys.path.append(str(root_dir))
 import numpy
 from ui import display as di
 from drafting_party import draft_party
-from chapters import chapter1, chapter2
+from chapters import chapter1, chapter2, chapter1_1
 from utils import save_load as sl
 
 # Metadata
@@ -36,5 +36,14 @@ if __name__ == '__main__':
             for j in range(1):
                 print(gs['guild_party_name_matrix'][i][j])
         gs = chapter1.chapter1(gs)
+        while True:
+            choice = input("\nWould you like to continue? (y/n) ")
+            if choice.lower() == 'y':
+                gs = chapter1_1.chapter1(gs)
+            elif choice.lower() == 'n':
+                sl.exit_game(gs)
+            else:
+                print("Invalid choice. Please try again.")
+    
     sl.exit_game(gs)
     

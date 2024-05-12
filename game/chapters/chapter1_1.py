@@ -2,7 +2,6 @@ from idle_gameplay import IdleGameplay
 import time
 import numpy
 from utils import save_load
-import copy
 #Rest of imports needed
 
 def chapter1(game_state):
@@ -30,21 +29,6 @@ def chapter1(game_state):
             for i in range(number_of_parties):
                 print(f"{i+1}. {party_name[i]}")
             party_num = int(input(f"Which party would you like to send?\n"))-1
-
-            print("Your team got a huge temporary booster!!!")
-            boosted_party = copy.deepcopy(pl[party_num])
-            for adventurer in boosted_party:
-                adventurer.health += 10000
-                adventurer.base_physical_damage += 1000
-                adventurer.base_elemental_damage += 1000
-
-            idle_gameplay.start_adventure(boosted_party,party_num)
-
-            print("Lets speed up the adventure by spending one diamond!")
-            idle_gameplay.reduce_adventure_duration(0, 600000)
-            print("...")
-            time.sleep(2)
-            print("\nNow try again without the booster")
             adventure_thread = idle_gameplay.start_adventure(numpy.copy(pl[party_num]),party_num)
             print("Great! Now wait a few seconds for the adventure to finish.")
             # Wait for the adventure thread to finish before executing code under join()
