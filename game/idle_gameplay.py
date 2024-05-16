@@ -113,7 +113,7 @@ class IdleGameplay:
 
     def manager(self):
         while True:
-            choice1 = input("\n1. Manage guild\n2. Manage party\n3. Manage Inventory\n4.Continue\nWhat would you like to do? ")
+            choice1 = input("\n1. Manage guild\n2. Manage party\n3. Manage Inventory\n4. Continue\nWhat would you like to do? ")
             if choice1 == '1':
                 choice2=input("\n1. View Guild stats\n2. Move party member\n3.Remove party member\nWhat would you like to do? ")
                 if choice2 == '1':
@@ -123,12 +123,14 @@ class IdleGameplay:
                     for a in range(int(self.game_state['guild_size'])):
                         for b in range(4):
                             if self.game_state['guild_member_matrix'][a][b] != 0:
-                                print()
-                                print({((int(self.game_state['guild_size']))*a+1)+b}, self.game_state['guild_member_matrix'][a][b].name)
-                    choice2a = input("Which party member would you like to move? ")
-                    a=int(choice2a)//4
-                    GuildManager.move_party_member(self, self.game_state['guild_member_matrix'][a][int(choice2a)-1-3*a])
-                    break
+                                print(((int(self.game_state['guild_size']))*a+1)+b, self.game_state['guild_member_matrix'][a][b].name)
+                    try:
+                        choice2a = input("Which party member would you like to move? ")
+                        a=int(choice2a)//4
+                        GuildManager.move_party_member(self, self.game_state['guild_member_matrix'][a][int(choice2a)-1-3*a])
+                    except ValueError:
+                        print("Invalid input.")
+                        continue
                 elif choice2 == '3':
                     for a in range(int(self.game_state['guild_size'])):
                         for b in range(4):
