@@ -14,16 +14,18 @@ def combat_loop(adventurers_list, flr = 0):
     enemy_party = enemy_list(floor).tolist()
     party = copy.deepcopy(adventurers_list)
     combat_queue = queue.PriorityQueue()
-    weakest_adventurer = min(party, key=lambda x: x.health)
-    strongest_adventurer = max(party, key=lambda x: x.health)
-    weakest_enemy = min(enemy_party, key=lambda x: x.health)
+    weakest_adventurer = min((x for x in party if x != 0), key=lambda x: x.health, default=None)
+    strongest_adventurer = max((x for x in party if x != 0), key=lambda x: x.health, default=None)
+    weakest_enemy = min((x for x in party if x != 0), key=lambda x: x.health, default=None)
     ability_counters = {} # Initialize a dictionary to keep track of ability counters for each character
 
     #Main combat loop
     while len(party) > 0:
         #Add each adventurer and enemy to the combat queue
         for adventurer in party:
-            combat_queue.put((adventurer.attack_speed, adventurer))
+            if adventurer != 0:
+                combat_queue.put((adventurer.attack_speed, adventurer))
+                break
         for enemy in enemy_party:
             combat_queue.put((enemy.attack_speed, enemy))
         #process each character in the combat queue

@@ -2,6 +2,7 @@ import time, random, json, threading
 from combat import combat_game as c
 from objects.item_generation import weapon_generation, armor_generation, accessory_generation
 from utils.guild_manager import GuildManager, PartyManager, ItemManager
+import  os
 
 class IdleGameplay:
     def __init__(self, game_state):
@@ -60,6 +61,7 @@ class IdleGameplay:
         gold_reward = floor_reached / 2 * (base_gold_reward + base_gold_reward + (floor_reached - 1) * gold_increase_per_floor)
 
         # Load items from config.json
+        print(os.getcwd())
         with open('assets\\data\\config.json') as f:
             items = json.load(f)
 
@@ -134,11 +136,15 @@ class IdleGameplay:
                 elif choice2 == '3':
                     for a in range(int(self.game_state['guild_size'])):
                         for b in range(4):
-                            print({((int(self.game_state['guild_size']))*a+1)+b})
-                            print(self.game_state['guild_member_matrix'][a][b].name)
-                    choice2b = input("Which party member would you like to remove? ")
-                    a=int(choice2b)//4
-                    GuildManager.remove_party_member(self, self.game_state['guild_member_matrix'][a][choice2b-1-3*a])
+                            if self.game_state['guild_member_matrix'][a][b] != 0:
+                                print(((int(self.game_state['guild_size']))*a+1)+b, self.game_state['guild_member_matrix'][a][b].name)
+                    try:
+                        choice2a = input("Which party member would you like to remove? ")
+                        a=int(choice2a)//4
+                        GuildManager.remove_party_member(self, self.game_state['guild_member_matrix'][a][int(choice2a)-1-3*a])
+                    except ValueError:
+                        print("Invalid input.")
+                        continue
                     break
                 else:
                     print("Invalid input.")
