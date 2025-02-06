@@ -4,32 +4,27 @@ import random
 from utils.guild_manager import GuildManager
 from objects.party import party
 import numpy
+import pygame
 from objects.adventurer_generation_2 import character
+from game_ui.buttons import clickable_lists
+from game_ui.text import text_box
+from game_ui.ui import update_display, set_up_background
+import threading
 # draft a single character
 def draft_character():
-    print("Pick your adventurer! You will get a choice from 3 random adventurers. Choose wisely and good luck!\n")
+    event = threading.Thread(target=clickable_lists.initialize_click_loop).start()
+    text_box.draw(-25, 100, 200, 50, "Pick your adventurer! You will get a choice from 3 random adventurers. Choose wisely and good luck!\n")
+    update_display.update()
     adventurers_draft_list = []
-    for _ in range(3):  
+    for _ in range(3):
+        clickable_lists.add_option("Adventurer " + str(_+1))
         print("Adventurer " + str(_+1), "\n")
         new_adventurer = character()
-        print(new_adventurer, "\n")
         adventurers_draft_list.append(new_adventurer)
-    while True:
-        choice = input("Choose Your Adventurer [type 1, 2 or 3] ")
-        if choice in ['1', '2', '3']:
-            choice = int(choice)
-            break
-        else:
-            print("That is not an option.\n")
-    if choice == 1:
-        new_adventurer = adventurers_draft_list[0]
-    elif choice == 2:
-        new_adventurer = adventurers_draft_list[1]
-    elif choice == 3:
-        new_adventurer = adventurers_draft_list[2]
-    print("You have chosen your adventurer.", "\n\n")
-    print(adventurers_draft_list[0])
-    return adventurers_draft_list[0]
+    update_display.update()
+    choice = clickable_lists.handle_event(event)
+    adventurers_draft_list.append(choice)
+    print(choice)
 
 #draft a party of 4 characters
 def draft_party(game_state):
@@ -75,3 +70,7 @@ def draft_party(game_state):
     new_party= GuildManager(game_state)
     new_party.guild_members(party_array, name)
     return party(name, adventurers_list, None, 1, 0), party_array
+
+def test_draft_party():
+    draft_character()
+test_draft_party()

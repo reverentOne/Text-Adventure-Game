@@ -1,4 +1,6 @@
 import pathlib, sys, os
+import pygame
+from game_ui import ui
 #Get root directory of the project
 root_dir = pathlib.Path(__file__).resolve().parent.parent
 # Add the root directory to sys.path
@@ -26,6 +28,12 @@ if __name__ == '__main__':
     # Start the game
     di.show_title()
     gs = sl.load_game()
+
+    pygame.init()
+    screen = pygame.display.set_mode((800, 600))
+    clock = pygame.time.Clock()
+    ui.set_up_background(screen, 800, 600).draw()
+    font = pygame.font.SysFont("comic sans", 18)
     if numpy.all(gs['guild_party_name_matrix'][0]==0):
         draft_party(gs)
         gs=chapter1.chapter1(gs)
@@ -44,6 +52,6 @@ if __name__ == '__main__':
                 sl.exit_game(gs)
             else:
                 print("Invalid choice. Please try again.")
-    
+    pygame.quit()
     sl.exit_game(gs)
     
