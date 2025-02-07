@@ -1,5 +1,6 @@
 import pygame
-
+pygame.init()
+pygame.font.init()
 class text_box():
     def __init__(self, x, y, width, height, text=''):
         self.font = pygame.font.SysFont("comic sans", 35)
@@ -33,22 +34,3 @@ class text_box():
                 self.text = self.text[:-1]
             else:
                 self.text += event.unicode
-
-pygame.init()
-screen = pygame.display.set_mode((640, 480))
-pygame.display.set_caption("Welcome")
-clock = pygame.time.Clock()
-textbox = text_box( 50, 50, 200, 50, "Type here")
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        textbox.handle_event(event)  # Pass events to the textbox
-
-    screen.fill((0, 0, 0))  # Clear the screen
-    textbox.draw(screen)  # Draw the textbox
-    pygame.display.flip()  # Update the display
-    clock.tick(60)  # Limit the frame rate to 60 FPS
-
-pygame.quit()

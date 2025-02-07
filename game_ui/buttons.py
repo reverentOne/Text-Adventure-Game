@@ -9,6 +9,7 @@ class clickable_lists():
         self.height = height
         self.options = []
         self.offset = 0
+        self.running = False
 
     def add_option(self, option):
         self.options.append(option)
@@ -20,6 +21,8 @@ class clickable_lists():
             screen.blit(text, (self.x + 5, self.y + 5 + (i * 20) - self.offset))
 
     def handle_event(self, event):
+        if event is None:
+            return None
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 4:  # Scroll up
                 self.offset = max(self.offset - 20, 0)
@@ -32,33 +35,9 @@ class clickable_lists():
                     if 0 <= index < len(self.options):
                         return self.options[index]
 
-
     def initialize_click_loop(self):
-        running = True
-        while running:
+        self.running = True
+        while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
-                return event
-
-pygame.init()
-screen = pygame.display.set_mode((800, 600))
-clock = pygame.time.Clock()
-font = pygame.font.SysFont("comic sans", 18)
-
-clickable_list = clickable_lists(font, 100, 100, 200, 300)
-clickable_list.add_option("Option 1")
-clickable_list.add_option("Option 2")
-# Add more options as needed
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        clickable_list.handle_event(event)
-    screen.fill((0, 0, 0))
-    clickable_list.draw(screen)
-    pygame.display.flip()
-    clock.tick(60)
-
-pygame.quit()
+                    self.running = False

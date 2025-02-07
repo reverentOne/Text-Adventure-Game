@@ -1,28 +1,42 @@
+import sys
+import pathlib
 
-#import enemy_generation
+# Get the root directory of the project
+root_dir = pathlib.Path(__file__).resolve().parent.parent
+# Add the root directory to sys.path
+sys.path.append(str(root_dir))
 import random
-from utils.guild_manager import GuildManager
-from objects.party import party
 import numpy
 import pygame
+import threading
+from utils.guild_manager import GuildManager
+from objects.party import party
 from objects.adventurer_generation_2 import character
 from game_ui.buttons import clickable_lists
 from game_ui.text import text_box
 from game_ui.ui import update_display, set_up_background
-import threading
+
+# Initialize Pygame
+
 # draft a single character
 def draft_character():
-    event = threading.Thread(target=clickable_lists.initialize_click_loop).start()
-    text_box.draw(-25, 100, 200, 50, "Pick your adventurer! You will get a choice from 3 random adventurers. Choose wisely and good luck!\n")
-    update_display.update()
+    pygame.init()
+    screen = pygame.display.set_mode((800, 600))
+    click_loop = clickable_lists(pygame.font.SysFont("comic sans", 18), 100, 100, 200, 50)
+    #click_loop.initialize_click_loop
+    print("1")
+    controller = update_display(screen)
+    textbox = text_box(100, 100, 200, 50, "Pick your adventurer! You will get a choice from 3 random adventurers. Choose wisely and good luck!\n")
+    textbox.draw(screen)
+    controller.update()
     adventurers_draft_list = []
     for _ in range(3):
-        clickable_lists.add_option("Adventurer " + str(_+1))
-        print("Adventurer " + str(_+1), "\n")
+        click_loop.add_option("Adventurer " + str(_+1))
         new_adventurer = character()
         adventurers_draft_list.append(new_adventurer)
-    update_display.update()
-    choice = clickable_lists.handle_event(event)
+    controller.update()
+    event = click_loop.handle_event(pygame.event.poll())
+    choice = event
     adventurers_draft_list.append(choice)
     print(choice)
 
