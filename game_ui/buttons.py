@@ -9,16 +9,16 @@ class clickable_lists():
         self.height = height
         self.options = []
         self.offset = 0
-        self.running = False
 
     def add_option(self, option):
         self.options.append(option)
 
     def draw(self, screen):
-        pygame.draw.rect(screen, (255, 255, 255), (self.x, self.y, self.width, self.height), 2)
         for i, option in enumerate(self.options):
             text = self.font.render(option, True, (255, 255, 255))
+            w, h = text.get_size()
             screen.blit(text, (self.x + 5, self.y + 5 + (i * 20) - self.offset))
+        pygame.draw.rect(screen, (255, 255, 255), (self.x, self.y, self.width, h*(len(self.options))), 2)
 
     def handle_event(self, event):
         if event is None:
@@ -35,9 +35,3 @@ class clickable_lists():
                     if 0 <= index < len(self.options):
                         return self.options[index]
 
-    def initialize_click_loop(self):
-        self.running = True
-        while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False

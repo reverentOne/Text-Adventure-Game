@@ -17,74 +17,75 @@ from game_ui.text import text_box
 from game_ui.ui import update_display, set_up_background
 
 # Initialize Pygame
+screen = pygame.display.set_mode((900, 600))
 
 # draft a single character
-def draft_character():
+def draft_character(screen, callback):
     pygame.init()
-    screen = pygame.display.set_mode((800, 600))
-    click_loop = clickable_lists(pygame.font.SysFont("comic sans", 18), 100, 100, 200, 50)
-    #click_loop.initialize_click_loop
-    print("1")
-    controller = update_display(screen)
-    textbox = text_box(100, 100, 200, 50, "Pick your adventurer! You will get a choice from 3 random adventurers. Choose wisely and good luck!\n")
-    textbox.draw(screen)
-    controller.update()
+    traits = []
+    click_loop = clickable_lists(pygame.font.SysFont("comic sans", 18), 300, 150, 200, 50)
+    textbox = text_box(300, 50, 300, 50, True, "Pick your adventurer!")
     adventurers_draft_list = []
-    for _ in range(3):
-        click_loop.add_option("Adventurer " + str(_+1))
+    for i in range(3):
         new_adventurer = character()
-        adventurers_draft_list.append(new_adventurer)
-    controller.update()
-    event = click_loop.handle_event(pygame.event.poll())
-    choice = event
-    adventurers_draft_list.append(choice)
-    print(choice)
+        adventurers_draft_list.append(new_adventurer.name)
+        click_loop.add_option(str(new_adventurer.name))
+        attributes = text_box(50 + (200*i + 200), 250, 200, 50, True, str(new_adventurer), True, pygame.font.SysFont("comic sans", 12))
+        traits.append(attributes)
+    
+    batch = []
+    batch.append(click_loop)
+    batch.append(textbox)
+    for item in traits:
+        batch.append(item)
+    run_screen(screen, batch, [click_loop], callback)
 
-#draft a party of 4 characters
 def draft_party(game_state):
-    adventurers_list = []
-    print("Welcome to your Adventurer Draft! Draft a party of 4 adventurers. You will get a choice from 3 random adventurers in each of 4 rounds. Choose wisely and good luck!\n")
-    for _ in range(4):  
-        print("Round " + str(_+1), "\n")
-        adventurers_draft_list = []
-        for _ in range(3):  
-            print("Adventurer " + str(_+1), "\n")
-            new_adventurer = character()
-            print(new_adventurer, "\n")
-            adventurers_draft_list.append(new_adventurer)
-        while True:
-            choice = input("Choose Your Adventurer [type 1, 2 or 3] ")
-            if choice in ['1', '2', '3']:
-                choice = int(choice)
-                break
-            else:
-                print("That is not an option.\n")
-
-
-        if choice == 1:
-            your_first_adventurer = adventurers_draft_list[0]
-            adventurers_list.append(your_first_adventurer)
-
-        elif choice == 2:
-            your_first_adventurer = adventurers_draft_list[1]
-            adventurers_list.append(your_first_adventurer)
-        elif choice == 3:
-            your_first_adventurer = adventurers_draft_list[2]
-            adventurers_list.append(your_first_adventurer)
-
-        print(your_first_adventurer)
-        print("You have chosen your adventurer.", "\n\n")
-
-    print("\nYour party is complete! Here are your adventurers:")
-    for adventurer in adventurers_list:
-        print("")
-        print(adventurer)
-    name = input("\nName your party:")
-    party_array = numpy.array(adventurers_list) #convert list to array so it can be used in a matrix with your other parties
-    new_party= GuildManager(game_state)
+    batch = []
+    textbox = text_box(300, 50, 50, 50, True, "Name Your Party")
+    write = text_box(300, 150, 50, 50, False)
+    batch.append(textbox)
+    batch.append(write)
+    name = run_screen(screen, batch, [textbox, write], lambda text: setattr(sys.modules[__name__], 'name', text))
+    
+    new_party = []
+    for i in range(4):
+        draft_character(screen, lambda adventurer: new_party.append(adventurer))
+    party_array = numpy.array(new_party)
+    new_party = GuildManager(game_state)
     new_party.guild_members(party_array, name)
-    return party(name, adventurers_list, None, 1, 0), party_array
+    return party(name, new_party, None, 1, 0), party_array
 
-def test_draft_party():
-    draft_character()
-test_draft_party()
+def run_screen(screen, batch, loops, callback):
+    pygame.init()
+    running = True
+    controller = update_display(screen)
+    while running:
+        screen.fill((0, 0, 0))  # Clear the screen
+        controller.batch_update(batch)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+                sys.exit()  # Ensure the program exits completely
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                for loop in loops:
+                    choice = loop.handle_event(event)
+                    if choice:
+                        callback(choice)
+                        running = False
+                        # Do not set running to False here to keep the screen on
+            elif event.type == pygame.KEYDOWN:
+                for loop in loops:
+                    loop.handle_event(event)
+                    if event.key == pygame.K_RETURN:
+                        try:
+                            callback(loop.text)
+                            running = False
+                            return loop.text
+                        except Exception:
+                            continue  # Continue running the loop if an error occurs
+
+    return  # Ensure the program exits completely
+
+draft_party(None)

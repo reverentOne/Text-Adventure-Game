@@ -59,15 +59,32 @@ class character_framework:
                                     [self_healing, healing, autoattack_speed],
                                     [ability_speed,0,0]])
 
+    """def __str__(self):
+        return (f"{'Name': <25} {self.name:<25}\n {'Bleed Threshold Damage': <25} {self.bleed_threshold_damage:<25}\n"
+                f"{'Health': <25} {self.health:<25}\n {'Bleed Threshold': <25} {self.bleed_threshold:<25}\n"
+                f"{'Base Physical Damage': <25} {self.base_physical_damage:<25}\n {'Critical Chance': <25} {self.critical_chance:<25}\n"
+                f"{'Base Elemental Damage': <25} {self.base_elemental_damage:<25}\n {'Critical Damage': <25} {self.critical_damage:<25}\n"
+                f"{'Physical Resistance': <25} {self.physical_resistance:<25}\n {'Self Healing': <25} {self.self_healing:<25}\n"
+                f"{'Elemental Resistance': <25} {self.elemental_resists:<25}\n {'Ally Healing': <25} {self.ally_healing:<25}\n"
+                f"{'Attack Speed': <25} {self.attack_speed:<25}\n {'Ability Speed': <25} {self.ability_speed:<25}\n"
+                f"{'Rating': <25} {self.rating:<25}")"""
+    
     def __str__(self):
-        return (f"{'Name': <25} {self.name:<25} {'Bleed Threshold Damage': <25} {self.bleed_threshold_damage:<25}\n"
-                f"{'Health': <25} {self.health:<25} {'Bleed Threshold': <25} {self.bleed_threshold:<25}\n"
-                f"{'Base Physical Damage': <25} {self.base_physical_damage:<25} {'Critical Chance': <25} {self.critical_chance:<25}\n"
-                f"{'Base Elemental Damage': <25} {self.base_elemental_damage:<25} {'Critical Damage': <25} {self.critical_damage:<25}\n"
-                f"{'Physical Resistance': <25} {self.physical_resistance:<25} {'Self Healing': <25} {self.self_healing:<25}\n"
-                f"{'Elemental Resistance': <25} {self.elemental_resists:<25} {'Ally Healing': <25} {self.ally_healing:<25}\n"
-                f"{'Attack Speed': <25} {self.attack_speed:<25} {'Ability Speed': <25} {self.ability_speed:<25}\n"
-                f"{'Rating': <25} {self.rating:<25}")
+        return (f"Name: {self.name}\n"
+            f"Bleed Threshold Damage: {self.bleed_threshold_damage}\n"
+            f"Health: {self.health}\n"
+            f"Bleed Threshold: {self.bleed_threshold}\n"
+            f"Base Physical Damage: {self.base_physical_damage}\n"
+            f"Critical Chance: {self.critical_chance}\n"
+            f"Base Elemental Damage: {self.base_elemental_damage}\n"
+            f"Critical Damage: {self.critical_damage}\n"
+            f"Physical Resistance: {self.physical_resistance}\n"
+            f"Self Healing: {self.self_healing}\n"
+            f"Elemental Resistance: {self.elemental_resists}\n"
+            f"Ally Healing: {self.ally_healing}\n"
+            f"Attack Speed: {self.attack_speed}\n"
+            f"Ability Speed: {self.ability_speed}\n"
+            f"Rating: {self.rating}")
 
     nature_attributes = numpy.array([
         [random.randint(0,5),random.randint(0,5),random.randint(0,5)],
@@ -182,4 +199,3 @@ def character():
             [-3*int(rarity_multiplier[rarity]),0,0]]) #not sure if this matrix addition works or if I need to first convert the original attributes into a matrix
     level+=1
     return character
-print(character())
