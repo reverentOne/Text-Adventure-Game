@@ -1,47 +1,89 @@
+import sys
+import pathlib
+# Get the root directory of the project
+root_dir = pathlib.Path(__file__).resolve().parent.parent.parent
+# Add the root directory to sys.path
+sys.path.append(str(root_dir))
+import pygame
 import numpy
-
-from objects.adventurer_generation_2 import character_framework
+from game_ui.buttons import clickable_lists
+from game_ui.text import text_box
+from game_ui.screen_manager import run_screen
+from objects.char_gen import CharacterGenerator
 
 
 class GuildManager:
     def __init__(self, game_state):
         self.game_state = game_state
-    def view_guild(self):
-        for i in range(int(self.game_state['guild_size'])):
-            if numpy.all(self.game_state['guild_member_matrix'][i] == 0):
-                print()
-                print("Empty Party")
-            else:
-                print()
-                print(self.game_state['guild_party_name_matrix'][i])
-            for j in range(4):
-                if self.game_state['guild_member_matrix'][i][j] == 0:
-                    print("Empty")
-                else:
-                    print()
-                    print(self.game_state['guild_member_matrix'][i][j])
-    def guild_members(self,party_array,name): #adds a party to the guild
-        for i in range(int(self.game_state['guild_size'])):
-            if numpy.all(self.game_state['guild_member_matrix'][i] == 0):
-                self.game_state['guild_member_matrix'][i] = party_array
-                self.game_state['guild_party_name_matrix'][i] = name
-                return True
+
+    def view_guild(self, screen):
+        pygame.init()
+        font = pygame.font.SysFont("Arial", 24)
+
+        # Create a clickable list for guild names
+        guild_list = clickable_lists(font, 50, 50, 200, 50)  # x, y, width, height of each item
+        for guild_name, _ in self.game_state['guild_teams']:
+            guild_list.add_option(guild_name)  # Add each guild name to the clickable list
+
+        batch = [guild_list]
+
+        # Use run_screen to select a guild
+        selected_guild = run_screen(screen, batch, [guild_list], lambda guild: guild)
+
+        # Debug: Check if a guild was selected
+        if not selected_guild:
+            print("No guild selected.")
+            return
+
+        print(f"Selected guild: {selected_guild}")
+
+        # Find the corresponding team
+        member_boxes = []
+        for name, team in self.game_state['guild_teams']:
+            if name == selected_guild:
+                print(f"Team found for guild: {name}")
+                # Create text boxes for each member
+                for i, member in enumerate(team):
+                    x, y = 300, 50 + i * 50  # Position for each member textbox
+                    text = member.name if member != 0 else "Empty"
+                    member_box = text_box(x, y, 300, 50, True, text, True, font)
+                    member_boxes.append(member_box)
+
+        # Add member boxes to the batch
+        batch.extend(member_boxes)
+
+        # Render the updated batch with member boxes
+        run_screen(screen, batch)
+
+        pygame.quit()
+    
+    def guild_members(self, party, name): #adds a party to the guild
+        self.game_state['guild_teams'].append((name, party))
+        return
             
-    def move_party_member(self,character): #moves a party member to a different slot in the guild and replaces the old slot with a different party member
-        for a in range(int(self.game_state['guild_size'])):
-            for b in range(4):
-                if self.game_state['guild_member_matrix'][a][b] == 0: 
-                    continue
-                if character == self.game_state['guild_member_matrix'][a][b]:
-                    found_at = (a, b)
-                    self.game_state['guild_member_matrix'][a][b] = 0
-                    choice = int(input("where would you like to move this party member? "))
-                    a = int(choice)//4
-                    replace = self.game_state['guild_member_matrix'][a][int(choice)-1-3*a]
-                    self.game_state['guild_member_matrix'][a][int(choice)-1-3*a] = character
-                    self.game_state['guild_member_matrix'][found_at[0]][found_at[1]] = replace
-                    print("Done")
-                    return True
+    def move_party_member(self, screen, character): 
+        pygame.init()
+        font = pygame.font.SysFont("Arial", 24)
+        running = True
+        batch = []
+        # Create a clickable list for guild names
+        guild_list = clickable_lists(font, 50, 50, 200, 40)  # x, y, width, height of each item
+        for guild_name, _ in self.game_state['guild_teams']:
+            guild_list.add_option(guild_name)  # Add each guild name to the clickable list
+        batch.append(guild_list)
+
+        # Use run_screen to select a guild
+        selected_guild = run_screen(screen, batch, [guild_list], lambda guild: guild)
+
+        # Find the corresponding team and add the character
+        if selected_guild:
+            for name, team in self.game_state['guild_teams']:
+                if name == selected_guild:
+                    team.append(character)  # Add the character to the selected team
+                    break
+
+        
+        
                 
     def add_party_member(self,character): #adds a character to the guild
         print("The following parties have open slots: ")
@@ -67,7 +109,7 @@ class GuildManager:
                     return True
 
    
-class PartyManager:
+"""class PartyManager:
     def __init__(self, game_state):
         self.game_state = game_state
 
@@ -131,7 +173,7 @@ class ItemManager:
                     return True
             else:
                 continue
-        """else: #This doesn't work with how the adventure is set up. The thread finishes before the user can replace an item
+        else: #This doesn't work with how the adventure is set up. The thread finishes before the user can replace an item
             print("Inventory is full.")
             replacement = input("Would you like to replace an item? (Y/N) ")
             if replacement == 'Y' or replacement == 'y':
@@ -145,7 +187,7 @@ class ItemManager:
                 self.game_state['loot']['inventory'][i][item_to_replace-1-4*i] = item
                 return True
             else:
-                return False"""
+                return False
 
     def view_items(self):
         for a in range(5):
@@ -173,4 +215,5 @@ class ProgressTracker:
 
     def track_progress(self):
         # Implement progress tracking
-        pass
+        pass"""
+

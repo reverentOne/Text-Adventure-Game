@@ -1,4 +1,10 @@
 import pickle, os, sys, numpy
+import sys
+import pathlib
+
+# Add the root directory to sys.path
+root_dir = pathlib.Path(__file__).resolve().parent.parent
+sys.path.append(str(root_dir))
 
 def save_game(game_state):
     with open('assets/data/game_state.pkl', 'wb') as f:
@@ -13,11 +19,8 @@ def load_game():
     return game_state
 def create_initial_game_state():
     # Define the initial game state here
-    guild_size = 5
     return {
-        'guild_size': guild_size,
-        'guild_member_matrix': numpy.zeros((guild_size, 4), dtype=object),
-        'guild_party_name_matrix': numpy.zeros((guild_size, 1), dtype=object),
+        'guild_teams' : [],
         'location': {
             'name': "",
             'description': "",

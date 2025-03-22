@@ -1,5 +1,4 @@
 import random
-from objects.adventurer_generation import character_framework
 import numpy
 boss_first_name = """ "Thuzuxeith", "Peercanam", "Lisantam","Dorlgughix",
 "Sezelcolchung", "Sustuthoseb", "Cablithrum",
@@ -19,45 +18,10 @@ enemy_first_name = """ "grog", "thug", "mug", "bug", "lug", "dug", "rug", "tug",
 "nug", "wug", "qug, "drazkir","turt", "brodd","dart" """
 
 def boss_enemy_generator(floor):
-    name = random.choice(boss_first_name) + random.choice(boss_title)
-    health = random.randint(10, floor * 100 + 10)
-    damage = random.randint(0, 3 * floor + 10)
-    elemental_damage = random.randint(0,2*floor+8)
-    bleed_threshold_damage = random.randint(0,200)
-    resist = random.randint(0, 8 + 2 * floor)
-    elemental_resists = random.randint(0, 35 + floor)
-    bleed_threshold = random.randint(200,1000)
-    critical_chance = random.random()
-    critical_damage = random.random()
-    self_healing = random.randint(0,10)
-    healing = random.randint(0,5)
-    autoattack_speed = random.random()
-    ability_speed = random.randint(0,300) 
-    boss_enemy = character_framework(name,health, damage,elemental_damage,
-                                     bleed_threshold_damage, resist, elemental_resists,
-                                     bleed_threshold,critical_chance, critical_damage,
-                                       self_healing, healing, autoattack_speed, ability_speed)
-    return boss_enemy
+    pass
+
 def enemy_generator(floor):
-    name = random.choice(enemy_first_name)
-    health = random.randint(10, floor * 10 + 10)
-    damage = random.randint(0, 3 * floor)
-    elemental_damage = random.randint(0,floor+1)
-    bleed_threshold_damage = random.randint(0,10)
-    resist = random.randint(0, 8 + floor)
-    elemental_resists = random.randint(0, 5 + floor)
-    bleed_threshold = random.randint(200,400)
-    critical_chance = random.random() - .2
-    critical_damage = random.random() - .3
-    self_healing = random.randint(0,1)
-    healing = random.randint(0,1)
-    autoattack_speed = random.random()
-    ability_speed = random.randint(0,150)
-    enemy = character_framework(name,health, damage,elemental_damage,
-                                     bleed_threshold_damage, resist, elemental_resists,
-                                     bleed_threshold,critical_chance, critical_damage,
-                                       self_healing, healing, autoattack_speed, ability_speed)
-    return enemy
+    pass
 
 def enemy_list(floor):
     enemy_party = []

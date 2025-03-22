@@ -9,7 +9,8 @@ from game_ui import ui
 import numpy
 from ui import display as di
 from drafting_party import draft_party
-from chapters import chapter1, chapter2, chapter1_1
+from utils.guild_manager import GuildManager
+#from chapters import chapter1, chapter2, chapter1_1
 from utils import save_load as sl
 
 # Metadata
@@ -20,33 +21,26 @@ __email__ = "your_email@example.com"  # Replace with your information
 
 # --- Main Execution ---
 if __name__ == '__main__':
-    if '--help' in sys.argv:
-        di.show_help()
-    if '--version' in sys.argv:
-        di.show_version(__version__, __date__)
+    pygame.init()  # Initialize Pygame
+    screen = pygame.display.set_mode((900, 600))  # Create a Pygame window
+    pygame.display.set_caption("Text Adventure Game")  # Set the window title
 
-    # Start the game
-    di.show_title()
+    # Load the game state
     gs = sl.load_game()
+    # Check if there are any guild teams
+    if len(gs["guild_teams"]) == 0:  # Access the 'guild_teams' key from the loaded game state
+        draft_party(gs,screen)
+    man = GuildManager(gs)
+    man.view_guild(screen)
+    # Main event loop to keep the window open
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:  # Handle window close event
+                running = False
+        screen.fill((0,0,0))
+        pygame.display.flip()
 
-    if numpy.all(gs['guild_party_name_matrix'][0]==0):
-        draft_party(gs)
-        gs=chapter1.chapter1(gs)
-    else:
-        print("\nWelcome back!")
-        print("Here are your current parties:")
-        for i in range(int(gs['guild_size'])):
-            for j in range(1):
-                print(gs['guild_party_name_matrix'][i][j])
-        gs = chapter1.chapter1(gs)
-        while True:
-            choice = input("\nWould you like to continue? (y/n) ")
-            if choice.lower() == 'y':
-                gs = chapter1_1.chapter1(gs)
-            elif choice.lower() == 'n':
-                sl.exit_game(gs)
-            else:
-                print("Invalid choice. Please try again.")
-    pygame.quit()
-    sl.exit_game(gs)
-    
+    pygame.quit() 
+
+

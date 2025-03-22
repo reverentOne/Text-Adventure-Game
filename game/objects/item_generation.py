@@ -138,6 +138,7 @@ def weapon_generation(item_name, level):
                             bleed_threshold, critical_chance, critical_damage,
                             self_healing, healing, autoattack_speed, ability_speed)
     return weapon
+
 def armor_generation(item_name, level):
     # Load the config file
     with open('assets\\data\\config.json') as f:
