@@ -32,7 +32,6 @@ if __name__ == '__main__':
         draft_party(gs,screen)
     man = GuildManager(gs)
     man.view_guild(screen)
-    # Main event loop to keep the window open
     running = True
     while running:
         for event in pygame.event.get():

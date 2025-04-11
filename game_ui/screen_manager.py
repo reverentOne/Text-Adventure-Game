@@ -1,12 +1,17 @@
-
-import pygame
 import sys
-from ui import update_display
+import pathlib
+# Get the root directory of the project
+root_dir = pathlib.Path(__file__).resolve().parent.parent
+# Add the root directory to sys.path
+sys.path.append(str(root_dir))
+import pygame
+from game_ui.ui import update_display
 
-def run_screen(screen, batch, loops=None, callback=None):
+def run_screen(screen, batch, interactables, callback):
     pygame.init()
     running = True
     controller = update_display(screen)
+    selected_option = None  # Initialize selected option
     while running:
         screen.fill((0, 0, 0))  # Clear the screen
         controller.batch_update(batch)
@@ -17,23 +22,25 @@ def run_screen(screen, batch, loops=None, callback=None):
                 pygame.quit()
                 sys.exit()  # Ensure the program exits completely
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if loops is not None:
-                    for loop in loops:
-                        choice = loop.handle_event(event)
-                        if choice:
-                            callback(choice)
-                            running = False
+                for interactable in interactables:
+                    result = interactable.handle_event(event)
+                    if result is not None:
+                        selected_option = callback(result)
+                        running = False
+                            
             elif event.type == pygame.KEYDOWN:
-                if loops is not None:
-                    for loop in loops:
-                        if loop.locked == False:
-                            loop.handle_event(event)
+                for interactable in interactables:
+                    try:
+                        if interactable.locked == False:
+                            interactable.handle_event(event)
                             if event.key == pygame.K_RETURN:
                                 try:
-                                    callback(loop.text)
+                                    selected_option = callback(interactable.text)
                                     running = False
-                                    return loop.text
+                                    return interactable.text
                                 except Exception:
                                     continue  
-
-    return  # Ensure the program exits completely
+                    except Exception:
+                        continue
+                        
+    return selected_option  # Return the selected option

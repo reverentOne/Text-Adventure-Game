@@ -9,7 +9,7 @@ import numpy
 from game_ui.buttons import clickable_lists
 from game_ui.text import text_box
 from game_ui.screen_manager import run_screen
-from objects.char_gen import CharacterGenerator
+from game.objects.char_gen import CharacterGenerator
 
 
 class GuildManager:
@@ -21,7 +21,7 @@ class GuildManager:
         font = pygame.font.SysFont("Arial", 24)
 
         # Create a clickable list for guild names
-        guild_list = clickable_lists(font, 50, 50, 200, 50)  # x, y, width, height of each item
+        guild_list = clickable_lists(font, 300, 50, 200, 50)  # x, y, width, height of each item
         for guild_name, _ in self.game_state['guild_teams']:
             guild_list.add_option(guild_name)  # Add each guild name to the clickable list
 
@@ -36,7 +36,7 @@ class GuildManager:
             return
 
         print(f"Selected guild: {selected_guild}")
-
+        
         # Find the corresponding team
         member_boxes = []
         for name, team in self.game_state['guild_teams']:
@@ -45,15 +45,18 @@ class GuildManager:
                 # Create text boxes for each member
                 for i, member in enumerate(team):
                     x, y = 300, 50 + i * 50  # Position for each member textbox
-                    text = member.name if member != 0 else "Empty"
+                    # Handle member based on its type
+                    text = member.name if hasattr(member, 'name') else str(member) if member != 0 else "Empty"
                     member_box = text_box(x, y, 300, 50, True, text, True, font)
                     member_boxes.append(member_box)
-
         # Add member boxes to the batch
         batch.extend(member_boxes)
 
+        # Clear the guild_list options to avoid retaining previous state
+        guild_list.clear_options()  # Ensure the list is cleared before reuse
+
         # Render the updated batch with member boxes
-        run_screen(screen, batch)
+        run_screen(screen, batch, [], lambda _: None)  # Pass empty interactables and a no-op callback
 
         pygame.quit()
     

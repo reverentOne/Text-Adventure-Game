@@ -3,15 +3,18 @@ import pathlib
 
 # Get the root directory of the project
 root_dir = pathlib.Path(__file__).resolve().parent.parent.parent
-# Add the root directory to sys.path
-sys.path.append(str(root_dir))
+# Dynamically add the utils directory to sys.path
+utils_dir = root_dir / "utils"
+if utils_dir.exists():
+    sys.path.append(str(utils_dir))
+sys.path.append(str(root_dir / "game" / "utils"))  # Adjusted to include "game" in the path
 import random
 import numpy
 import pygame
-import threading
-from utils.guild_manager import GuildManager
-from objects.party import party
-from objects.char_gen import CharacterGenerator
+
+from game.utils.guild_manager import GuildManager
+from game.objects.party import party
+from game.objects.char_gen import CharacterGenerator
 from game_ui.buttons import clickable_lists
 from game_ui.text import text_box
 from game_ui.ui import update_display, set_up_background

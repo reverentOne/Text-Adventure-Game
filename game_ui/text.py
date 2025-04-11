@@ -3,7 +3,7 @@ pygame.init()
 pygame.font.init()
 
 class text_box():
-    def __init__(self, x, y, width, height, locked, text='', wrap=False, font = pygame.font.SysFont("comic sans", 35)):
+    def __init__(self, x, y, width, height, locked= True, text='', wrap=False, font = pygame.font.SysFont("comic sans", 35)):
         self.font = font
         self.x = x
         self.y = y
